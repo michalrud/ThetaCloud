@@ -2,7 +2,6 @@
 #define THETA_CLOUD_RELAY_H
 
 #include "SensorData.h"
-#include "ThetaCloud.h"
 #include <map>
 
 class ThetaCloudRelay

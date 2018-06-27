@@ -17,6 +17,7 @@ tick	KEYWORD2
 whenDataAvailable KEYWORD2
 getName	KEYWORD2
 getValue	KEYWORD2
+addReadHandler	KEYWORD2
 
 ######################################
 # Constants (LITERAL1)
@@ -25,4 +26,6 @@ getValue	KEYWORD2
 thetaCloud	LITERAL1
 thetaCloudLight	LITERAL1
 thetaCloudRelay	LITERAL1
+thetaCloudHumidity	LITERAL1
+thetaCloudCO2	LITERAL1
 sensorData	LITERAL1
