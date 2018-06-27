@@ -6,6 +6,7 @@
 #include <memory>
 #include <functional>
 #include "SensorData.h"
+#include "SensorHandlerToken.h"
 
 #define THETA_SUBSCRIBE() \
 	void thetaSubscribeFunction(const SensorData& sensorData);\
@@ -26,11 +27,12 @@ public:
 
 	void init();
 	void whenDataAvailable(const Emit& dataCallback);
-	void addReadHandler(const SensorReadHandler& handler);
-	void addWriteHandler(const std::string& topic, const SensorWriteHandler& handler);
+	SensorHandlerTokenPtr addReadHandler(const SensorReadHandler& handler);
+	SensorHandlerTokenPtr addWriteHandler(const std::string& topic, const SensorWriteHandler& handler);
 	void write(const SensorData& data) const;
 	void tick();
 private:
+
 	Emit dataCallback;
 	bool initialized;
 	std::list<SensorReadHandler> sensorReadHandlers;

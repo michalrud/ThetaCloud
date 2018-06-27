@@ -3,6 +3,7 @@
 
 #include <memory>
 #include "SensorData.h"
+#include "SensorHandlerToken.h"
 
 class ISL29023;
 
@@ -14,6 +15,8 @@ public:
 private:
 	std::unique_ptr<ISL29023> isl;
 	char dtostrfbuf[15];
+
+	SensorHandlerTokenPtr lightToken;
 };
 
 extern ThetaCloudLight thetaCloudLight;

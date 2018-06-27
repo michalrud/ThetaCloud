@@ -18,12 +18,12 @@ ThetaCloudHumidity::ThetaCloudHumidity()
 
 void ThetaCloudHumidity::init()
 {
-	thetaCloud.addReadHandler([this](const ThetaCloud::Emit& emit) {
+	humidityToken = thetaCloud.addReadHandler([this](const ThetaCloud::Emit& emit) {
 		char dtostrfbuf[15];
 		emit(SensorData{std::string("humidity"),
 			std::string(dtostrf(this->GetHumidity(), 8, 2, dtostrfbuf))});
 	});
-	thetaCloud.addReadHandler([this](const ThetaCloud::Emit& emit) {
+	temperatureToken = thetaCloud.addReadHandler([this](const ThetaCloud::Emit& emit) {
 		char dtostrfbuf[15];
 		emit(SensorData{std::string("temperature"),
 			std::string(dtostrf(this->GetTemperature(), 8, 2, dtostrfbuf))});

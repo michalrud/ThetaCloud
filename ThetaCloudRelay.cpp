@@ -26,13 +26,13 @@ void ThetaCloudRelay::init()
 	{
 		  pinMode(pin.second, OUTPUT);
 	}
-	thetaCloud.addWriteHandler("Relay1", [this](const SensorData& data,
-		const ThetaCloud::Emit& emit) {
-		trySetSwitch(Switch::one, data);
+	switch1Token = thetaCloud.addWriteHandler("Relay1",
+		[this](const SensorData& data, const ThetaCloud::Emit& emit) {
+			trySetSwitch(Switch::one, data);
 	});
-	thetaCloud.addWriteHandler("Relay2", [this](const SensorData& data,
-		const ThetaCloud::Emit& emit) {
-		trySetSwitch(Switch::two, data);
+	switch2Token = thetaCloud.addWriteHandler("Relay2",
+		[this](const SensorData& data, const ThetaCloud::Emit& emit) {
+			trySetSwitch(Switch::two, data);
 	});
 }
 

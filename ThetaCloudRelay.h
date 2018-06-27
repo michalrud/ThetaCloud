@@ -2,6 +2,7 @@
 #define THETA_CLOUD_RELAY_H
 
 #include "SensorData.h"
+#include "SensorHandlerToken.h"
 #include <map>
 
 class ThetaCloudRelay
@@ -18,6 +19,9 @@ protected:
 	};
 	void trySetSwitch(Switch sw, const SensorData& data) const;
 	void setSwitch(Switch whichOne, bool enabled) const;
+
+	SensorHandlerTokenPtr switch1Token;
+	SensorHandlerTokenPtr switch2Token;
 };
 
 extern ThetaCloudRelay thetaCloudRelay;

@@ -26,7 +26,7 @@ void ThetaCloudCO2::init()
 		return;
 	}
 	// actual initialization if board is detected
-	thetaCloud.addReadHandler([this](const ThetaCloud::Emit& emit) {
+	co2Token = thetaCloud.addReadHandler([this](const ThetaCloud::Emit& emit) {
 		auto measurementResult = GetCo2Level();
 		if (measurementResult.error) return;
 		char dtostrfbuf[15];

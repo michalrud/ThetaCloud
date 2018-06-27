@@ -2,6 +2,7 @@
 #define THETA_CLOUD_CO2_H
 
 #include <string>
+#include "SensorHandlerToken.h"
 
 class ThetaCloudCO2
 {
@@ -17,6 +18,8 @@ protected:
 	};
 	bool enabled;
 	static SensorGetValue GetCo2Level();
+
+	SensorHandlerTokenPtr co2Token;
 };
 
 extern ThetaCloudCO2 thetaCloudCO2;

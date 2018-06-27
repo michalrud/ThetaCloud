@@ -2,6 +2,8 @@
 #define THETA_CLOUD_HUMIDITY_H
 
 #include "Arduino.h"
+#include <memory>
+#include "SensorHandlerToken.h"
 
 class ThetaCloudHumidity
 {
@@ -19,6 +21,9 @@ protected:
 	static float GetTemperature();
 
 	static SensorGetValue GetValue(uint8_t command);
+
+	SensorHandlerTokenPtr humidityToken;
+	SensorHandlerTokenPtr temperatureToken;
 };
 
 extern ThetaCloudHumidity thetaCloudHumidity;

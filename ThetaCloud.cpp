@@ -1,6 +1,7 @@
 #include "Arduino.h"
 #include "ThetaCloud.h"
 #include "Wire.h"
+#include <cassert>
 
 const int TC_I2C_SDA = 2;
 const int TC_I2C_SCL = 14;
@@ -17,14 +18,24 @@ void ThetaCloud::whenDataAvailable(const std::function<void(const SensorData&)>&
 	this->dataCallback = dataCallback;
 }
 
-void ThetaCloud::addReadHandler(const SensorReadHandler& handler)
+SensorHandlerTokenPtr ThetaCloud::addReadHandler(const SensorReadHandler& handler)
 {
-	sensorReadHandlers.push_back(handler);
+	auto it = sensorReadHandlers.insert(sensorReadHandlers.end(), handler);
+	return std::unique_ptr<SensorHandlerToken>(
+		new SensorHandlerToken([it, this](){
+			sensorReadHandlers.erase(it);
+	}));
 }
 
-void ThetaCloud::addWriteHandler(const std::string& topic, const SensorWriteHandler& handler)
+SensorHandlerTokenPtr ThetaCloud::addWriteHandler(const std::string& topic, const SensorWriteHandler& handler)
 {
-	sensorWriteHandlers[topic] = handler;
+	auto it = sensorWriteHandlers.insert(std::make_pair(topic, handler));
+	assert(it.second);
+	auto elementIterator = it.first;
+	return std::unique_ptr<SensorHandlerToken>(
+		new SensorHandlerToken([elementIterator, this](){
+			sensorWriteHandlers.erase(elementIterator);
+	}));
 }
 
 void ThetaCloud::write(const SensorData& data) const

@@ -1,5 +1,6 @@
 #include "catch2/catch.hpp"
 #include "ThetaCloud.h"
+#include "SensorHandlerToken.h"
 #include "Wire.h"
 
 struct ThetaCloudFixture {
@@ -10,10 +11,13 @@ protected:
 struct ThetaCloudWithExampleReadHandler : public ThetaCloudFixture {
 	ThetaCloudWithExampleReadHandler()
 	{
-		testedThetaCloud.addReadHandler([this](const ThetaCloud::Emit& emit) {
-			emit(SensorData{std::string("tick"), std::string("value")});
+		readHandlerToken = testedThetaCloud.addReadHandler(
+			[this](const ThetaCloud::Emit& emit) {
+				emit(SensorData{std::string("tick"), std::string("value")});
 		});
 	}
+
+	SensorHandlerTokenPtr readHandlerToken;
 };
 
 struct ThetaCloudWithExampleWriteHandler : public ThetaCloudFixture {
@@ -24,10 +28,13 @@ struct ThetaCloudWithExampleWriteHandler : public ThetaCloudFixture {
 		testedThetaCloud.whenDataAvailable([this](const SensorData& data) {
 			writtenSensorData.push_back(data);
 		});
-		testedThetaCloud.addWriteHandler(TEST_TOPIC, [](const SensorData& data, const ThetaCloud::Emit& emit) {
-			emit(data);
+		writeHandlerToken = testedThetaCloud.addWriteHandler(TEST_TOPIC,
+			[](const SensorData& data, const ThetaCloud::Emit& emit) {
+				emit(data);
 		});
 	}
+
+	SensorHandlerTokenPtr writeHandlerToken;
 };
 
 TEST_CASE_METHOD(ThetaCloudWithExampleReadHandler, "ReadCallbacksNotCalledWhenNotInitialized", "[thetaBase]") {
@@ -54,13 +61,39 @@ TEST_CASE_METHOD(ThetaCloudWithExampleReadHandler, "ReadCallbacksCalledWhenIniti
 }
 
 TEST_CASE_METHOD(ThetaCloudFixture, "NothingHappensWhenThereAreNoReadCallbacks", "[thetaBase]") {
-	int callbackCounter = 0;
 	testedThetaCloud.whenDataAvailable([&](const SensorData& data)
 		{
 			FAIL();
 		});
 	testedThetaCloud.init();
 	testedThetaCloud.tick();
+}
+
+TEST_CASE_METHOD(ThetaCloudFixture, "ServicesCanUnsubscribeByDeletingToken", "[thetaBase]") {
+	int callbackCounter = 0;
+	testedThetaCloud.whenDataAvailable([&](const SensorData& data)
+		{
+			++callbackCounter;
+		});
+	testedThetaCloud.init();
+	auto token1 = testedThetaCloud.addReadHandler(
+		[this](const ThetaCloud::Emit& emit) {
+			emit(SensorData{std::string(), std::string()});
+	});
+	testedThetaCloud.tick();
+	CHECK(1 == callbackCounter);
+	callbackCounter = 0;
+	{
+		auto token2 = testedThetaCloud.addReadHandler(
+			[this](const ThetaCloud::Emit& emit) {
+				emit(SensorData{std::string(), std::string()});
+		});
+		testedThetaCloud.tick();
+		CHECK(2 == callbackCounter);
+	}
+	callbackCounter = 0;
+	testedThetaCloud.tick();
+	CHECK(1 == callbackCounter);
 }
 
 TEST_CASE_METHOD(ThetaCloudWithExampleWriteHandler, "WritingCausesAnAction", "[thetaBase]") {
