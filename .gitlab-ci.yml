@@ -1,16 +1,28 @@
-image: gcc:latest
-
 stages:
   - test
-
-before_script:
-  - apt-get update -y
-  - apt-get install cmake -y
+  - doc
 
 test:
+  image: gcc:latest
   stage: test
   script:
+    - apt-get update -y
+    - apt-get install cmake -y
     - mkdir build
     - cd build
     - cmake ..
     - make -j4
+
+doc:
+  image: ubuntu:latest
+  stage: doc
+  script:
+    - apt-get update -y
+    - apt-get install python3-sphinx make -y
+    - sphinx-build -b html . ./_build
+    - mv _build/ public/
+  artifacts:
+    paths:
+      - public
+  only:
+    - master

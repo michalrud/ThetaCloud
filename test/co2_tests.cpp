@@ -56,7 +56,6 @@ TEST_F(ThetaCloudCO2Tests, ReadingCo2AndVoc)
 	EXPECT_CALL((*Wire.mock), read()).InSequence(s).WillOnce(Return(0xFD));
 	EXPECT_CALL((*Wire.mock), read()).InSequence(s).WillOnce(Return(0x0E));
 	EXPECT_CALL((*Wire.mock), read()).InSequence(s).WillOnce(Return(0x0F));
-	// EXPECT_CALL((*arduinoMock), delay(100)).Times(1);
 
 	EXPECT_CALL(mockCallback, callback(_)).WillRepeatedly(::testing::Invoke([&](const SensorData& d){
 		float value = std::stof(d.value);
