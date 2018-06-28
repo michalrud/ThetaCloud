@@ -40,3 +40,9 @@ add_executable(thetaCloudBaseTests ${theta_cloud_base_tests} ${src} ${fakeCpps})
 target_link_libraries( thetaCloudBaseTests libgtest libgmock)
 add_custom_command(TARGET thetaCloudBaseTests POST_BUILD
 	COMMAND thetaCloudBaseTests )
+
+set (i2c_helpers_tests test/main.cpp test/i2c_helpers_tests.cpp)
+add_executable(i2cHelpersTests ${i2c_helpers_tests} ${src} ${fakeCpps})
+target_link_libraries( i2cHelpersTests libgtest libgmock)
+add_custom_command(TARGET i2cHelpersTests POST_BUILD
+    COMMAND i2cHelpersTests )
