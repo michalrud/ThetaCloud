@@ -4,7 +4,6 @@
 #include "ThetaCloudLight.h"
 #include "Wire.h"
 #include "testing_utils.hpp"
-#include "MockThetaCloud.hpp"
 #include "generic_mocks.hpp"
 
 using ::testing::_;
@@ -19,16 +18,8 @@ const uint8_t DATALSB_REGISTER	= 0x02;
 const uint8_t DATAMSB_REGISTER	= 0x03;
 
 
-struct ThetaCloudLightTests : public GenericTest
+struct ThetaCloudLightTests : public MockedThetaCloudTests
 {
-	ThetaCloudLightTests()
-	{
-		mockThetaCloud.reset(new MockThetaCloud());
-	}
-	~ThetaCloudLightTests()
-	{
-		mockThetaCloud.reset();
-	}
 	ThetaCloudLight tested;
 	MockCallback mockCallback;
 	::testing::Sequence s;

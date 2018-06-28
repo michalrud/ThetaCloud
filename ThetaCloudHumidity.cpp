@@ -1,16 +1,15 @@
 #include "ThetaCloudHumidity.h"
 #include "Arduino.h"
-#include <Wire.h>
 #include <cmath>
 #include "SensorData.h"
 #include "ThetaCloud.h"
+#include "I2CHelpers.h"
+#include "Utils.h"
 
 const uint8_t SHT21_ADDRESS = 0x40;
 
 const uint8_t GET_TEMPERATURE_CMD = 0xF3;
 const uint8_t GET_HUMIDITY_CMD = 0xF5;
-
-const unsigned int READ_RETRIES = 10;
 
 ThetaCloudHumidity::ThetaCloudHumidity()
 {
@@ -19,14 +18,10 @@ ThetaCloudHumidity::ThetaCloudHumidity()
 void ThetaCloudHumidity::init()
 {
 	humidityToken = thetaCloud.addReadHandler([this](const ThetaCloud::Emit& emit) {
-		char dtostrfbuf[15];
-		emit(SensorData{std::string("humidity"),
-			std::string(dtostrf(this->GetHumidity(), 8, 2, dtostrfbuf))});
+		emit(SensorData{std::string("humidity"), floatToString(this->GetHumidity())});
 	});
 	temperatureToken = thetaCloud.addReadHandler([this](const ThetaCloud::Emit& emit) {
-		char dtostrfbuf[15];
-		emit(SensorData{std::string("temperature"),
-			std::string(dtostrf(this->GetTemperature(), 8, 2, dtostrfbuf))});
+		emit(SensorData{std::string("temperature"), floatToString(this->GetTemperature())});
 	});
 }
 
@@ -50,30 +45,16 @@ ThetaCloudHumidity::SensorGetValue ThetaCloudHumidity::GetValue(uint8_t command)
 {
 	uint16_t result;
 
-	Wire.beginTransmission(SHT21_ADDRESS);
-	Wire.write(command);
-	Wire.endTransmission();
+	WriteToI2C(SHT21_ADDRESS).write(command);
 
 	delay(100);
 
-	Wire.requestFrom(SHT21_ADDRESS, (uint8_t) 3);
-	delay(5);
-	{
-		unsigned int attempt = 0;
-	    while (Wire.available() < 3) {
-	        if (++attempt > READ_RETRIES) {
-	            return {0, true};
-	        }
-	        delay(10);
-	    }
-	}
+	auto dataFromSensor = ReadFromI2C<3>(SHT21_ADDRESS);
+	if (dataFromSensor.second) return ERROR;
 
-    result = Wire.read() << 8;
-    result += Wire.read();
+    result = dataFromSensor.first[0] << 8;
+    result += dataFromSensor.first[1];
     result &= ~0x0003;   // clear two low bits (status bits)
-
-    //Clear the final byte from the buffer
-    Wire.read();
 
     return {result, false};
 }

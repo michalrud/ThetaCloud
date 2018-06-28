@@ -16,6 +16,7 @@ protected:
 		uint16_t value;
 		bool error;
 	};
+	static constexpr SensorGetValue ERROR = {0, true};
 
 	static float GetHumidity();
 	static float GetTemperature();

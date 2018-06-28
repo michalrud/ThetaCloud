@@ -59,7 +59,7 @@ TEST_F(I2CHelpersTests, ReadingFromI2C_failure)
 	EXPECT_CALL((*Wire.mock), requestFrom(TEST_ADDRESS, 5));
 	EXPECT_CALL((*Wire.mock), available()).WillRepeatedly(Return(0));
 	EXPECT_CALL((*Wire.mock), read()).Times(0);
-	EXPECT_CALL((*arduinoMock), delay(::testing::_)).Times(10);
+	EXPECT_CALL((*arduinoMock), delay(10)).Times(10);
 	auto readResult = ReadFromI2C<5>(TEST_ADDRESS);
 	EXPECT_TRUE(readResult.second);
 }

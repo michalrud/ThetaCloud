@@ -53,3 +53,9 @@ add_executable(lightTests ${light_tests} ThetaCloudLight.cpp ${fakeCpps} ${theta
 target_link_libraries( lightTests libgtest libgmock)
 add_custom_command(TARGET lightTests POST_BUILD
     COMMAND lightTests )
+
+set (light_tests test/main.cpp test/humidity_tests.cpp)
+add_executable(humidityTests ${light_tests} ThetaCloudHumidity.cpp ${fakeCpps} ${thetaCloudBaseMockSrc})
+target_link_libraries( humidityTests libgtest libgmock)
+add_custom_command(TARGET humidityTests POST_BUILD
+    COMMAND humidityTests )

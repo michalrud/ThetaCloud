@@ -4,6 +4,8 @@
 #include <SensorData.h>
 #include <Wire.h>
 #include <Arduino.h>
+#include "ThetaCloud.h"
+#include "MockThetaCloud.hpp"
 
 struct GenericTest : public ::testing::Test {
 	GenericTest()
@@ -15,6 +17,17 @@ struct GenericTest : public ::testing::Test {
 	{
 		Wire.mock.reset();
 		arduinoMock.reset();
+	}
+};
+
+struct MockedThetaCloudTests : public GenericTest {
+	MockedThetaCloudTests()
+	{
+		mockThetaCloud.reset(new MockThetaCloud());
+	}
+	~MockedThetaCloudTests()
+	{
+		mockThetaCloud.reset();
 	}
 };
 
