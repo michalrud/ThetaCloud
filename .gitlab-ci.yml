@@ -1,0 +1,16 @@
+image: gcc:latest
+
+stages:
+  - test
+
+before_script:
+  - apt-get update -y
+  - apt-get install cmake -y
+
+test:
+  stage: test
+  script:
+    - mkdir build
+    - cd build
+    - cmake ..
+    - make -j4
