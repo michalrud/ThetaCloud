@@ -11,7 +11,7 @@ using ::testing::Invoke;
 
 const auto TEST_SENSOR_DATA = SensorData{"TEST_TOPIC", "EXAMPLE_WRITTEN_VALUE"};
 
-struct ThetaCloudFixture : public ::testing::Test {
+struct ThetaCloudFixture : public GenericTest {
 protected:
 	MockCallback mockCallback;
 	ThetaCloud testedThetaCloud;
@@ -20,11 +20,6 @@ protected:
 		testedThetaCloud.whenDataAvailable([this](const SensorData& data) {
 			mockCallback.callback(data);
 		});
-		Wire.mock.reset(new WireMock());
-	}
-	~ThetaCloudFixture()
-	{
-		Wire.mock.reset();
 	}
 };
 

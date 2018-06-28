@@ -33,7 +33,8 @@ include_directories("${source_dir}/googletest/include"
                     "${source_dir}/googlemock/include")
 
 include_directories( test/fakeIncludes )
-set ( fakeCpps test/fakeIncludes/StaticStuff.cpp )
+set ( fakeCpps test/fakeIncludes/StaticStuff.cpp test/fakeIncludes/Arduino.cpp )
+
 set (theta_cloud_base_tests test/main.cpp test/theta_cloud_base_tests.cpp)
 add_executable(thetaCloudBaseTests ${theta_cloud_base_tests} ${src} ${fakeCpps})
 target_link_libraries( thetaCloudBaseTests libgtest libgmock)
