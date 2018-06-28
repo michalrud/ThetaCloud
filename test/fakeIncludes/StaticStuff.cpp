@@ -1,3 +1,3 @@
 #include "Wire.h"
 
-WireT Wire;
+WireProxy Wire;

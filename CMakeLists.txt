@@ -4,29 +4,38 @@ set (CMAKE_CXX_STANDARD 11)
 set(src ThetaCloud.cpp)
 include_directories(${CMAKE_CURRENT_LIST_DIR})
 
+find_package(Threads REQUIRED)
 include(ExternalProject)
-find_package(Git REQUIRED)
-
 ExternalProject_Add(
-    catch
-    PREFIX ${CMAKE_BINARY_DIR}/catch
-    GIT_REPOSITORY https://github.com/catchorg/Catch2.git
-    TIMEOUT 10
-    UPDATE_COMMAND ${GIT_EXECUTABLE} pull
-    CONFIGURE_COMMAND ""
-    BUILD_COMMAND ""
+    gtest
+    URL https://github.com/google/googletest/archive/master.zip
+    PREFIX ${CMAKE_CURRENT_BINARY_DIR}/gtest
+    # Disable install step
     INSTALL_COMMAND ""
-    LOG_DOWNLOAD ON
-   )
+)
+ExternalProject_Get_Property(gtest source_dir binary_dir)
 
-ExternalProject_Get_Property(catch source_dir)
-set(CATCH_INCLUDE_DIR ${source_dir}/single_include CACHE INTERNAL "Path to include folder for Catch")
-include_directories( ${CATCH_INCLUDE_DIR} )
+add_library(libgtest IMPORTED STATIC GLOBAL)
+add_dependencies(libgtest gtest)
+set_target_properties(libgtest PROPERTIES
+    "IMPORTED_LOCATION" "${binary_dir}/googlemock/gtest/libgtest.a"
+    "IMPORTED_LINK_INTERFACE_LIBRARIES" "${CMAKE_THREAD_LIBS_INIT}"
+)
+
+add_library(libgmock IMPORTED STATIC GLOBAL)
+add_dependencies(libgmock gtest)
+set_target_properties(libgmock PROPERTIES
+    "IMPORTED_LOCATION" "${binary_dir}/googlemock/libgmock.a"
+    "IMPORTED_LINK_INTERFACE_LIBRARIES" "${CMAKE_THREAD_LIBS_INIT}"
+)
+
+include_directories("${source_dir}/googletest/include"
+                    "${source_dir}/googlemock/include")
+
 include_directories( test/fakeIncludes )
 set ( fakeCpps test/fakeIncludes/StaticStuff.cpp )
 set (theta_cloud_base_tests test/main.cpp test/theta_cloud_base_tests.cpp)
 add_executable(thetaCloudBaseTests ${theta_cloud_base_tests} ${src} ${fakeCpps})
-target_link_libraries( thetaCloudBaseTests ${OpenCV_LIBS} )
-add_dependencies(thetaCloudBaseTests catch)
+target_link_libraries( thetaCloudBaseTests libgtest libgmock)
 add_custom_command(TARGET thetaCloudBaseTests POST_BUILD
 	COMMAND thetaCloudBaseTests )

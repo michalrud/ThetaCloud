@@ -1,15 +1,16 @@
 #pragma once
-#include <list>
-#include <string>
+#include <memory>
+#include "gmock/gmock.h"
 
-struct WireT
+struct WireMock
 {
-	std::list<std::string> history;
-	void begin(int a, int b)
-	{
-		history.push_back(std::string("begin(") + std::to_string(a)
-			+ "," + std::to_string(b) + ");");
-	}
+	MOCK_METHOD2(begin, void(int, int));
 };
 
-extern WireT Wire;
+struct WireProxy
+{
+	void begin(int a, int b) {mock->begin(a, b);}
+	std::unique_ptr<WireMock> mock;
+};
+
+extern WireProxy Wire;
