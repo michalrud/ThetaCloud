@@ -16,6 +16,7 @@ protected:
 		float vocValue;
 		bool error;
 	};
+	static constexpr ThetaCloudCO2::SensorGetValue ERROR = {0, 0, true};
 	bool enabled;
 	static SensorGetValue GetCo2Level();
 
