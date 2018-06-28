@@ -5,15 +5,13 @@
 #include "SensorData.h"
 #include "SensorHandlerToken.h"
 
-class ISL29023;
-
 class ThetaCloudLight
 {
 public:
 	ThetaCloudLight();
 	void init();
 private:
-	std::unique_ptr<ISL29023> isl;
+	float read();
 	char dtostrfbuf[15];
 
 	SensorHandlerTokenPtr lightToken;

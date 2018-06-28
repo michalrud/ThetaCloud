@@ -1,7 +1,8 @@
 cmake_minimum_required(VERSION 2.8)
 project( ThetaCloudTests )
 set (CMAKE_CXX_STANDARD 11)
-set(src ThetaCloud.cpp)
+set(thetaCloudBaseSrc ThetaCloud.cpp)
+set(thetaCloudBaseMockSrc test/fakeIncludes/MockThetaCloud.cpp)
 include_directories(${CMAKE_CURRENT_LIST_DIR})
 
 find_package(Threads REQUIRED)
@@ -33,16 +34,22 @@ include_directories("${source_dir}/googletest/include"
                     "${source_dir}/googlemock/include")
 
 include_directories( test/fakeIncludes )
-set ( fakeCpps test/fakeIncludes/StaticStuff.cpp test/fakeIncludes/Arduino.cpp )
+set ( fakeCpps test/fakeIncludes/StaticStuff.cpp test/fakeIncludes/Arduino.cpp test/fakeIncludes/FakeUtils.cpp )
 
 set (theta_cloud_base_tests test/main.cpp test/theta_cloud_base_tests.cpp)
-add_executable(thetaCloudBaseTests ${theta_cloud_base_tests} ${src} ${fakeCpps})
+add_executable(thetaCloudBaseTests ${theta_cloud_base_tests} ${thetaCloudBaseSrc} ${fakeCpps})
 target_link_libraries( thetaCloudBaseTests libgtest libgmock)
 add_custom_command(TARGET thetaCloudBaseTests POST_BUILD
 	COMMAND thetaCloudBaseTests )
 
 set (i2c_helpers_tests test/main.cpp test/i2c_helpers_tests.cpp)
-add_executable(i2cHelpersTests ${i2c_helpers_tests} ${src} ${fakeCpps})
+add_executable(i2cHelpersTests ${i2c_helpers_tests} ${thetaCloudBaseSrc} ${fakeCpps})
 target_link_libraries( i2cHelpersTests libgtest libgmock)
 add_custom_command(TARGET i2cHelpersTests POST_BUILD
     COMMAND i2cHelpersTests )
+
+set (light_tests test/main.cpp test/light_tests.cpp)
+add_executable(lightTests ${light_tests} ThetaCloudLight.cpp ${fakeCpps} ${thetaCloudBaseMockSrc})
+target_link_libraries( lightTests libgtest libgmock)
+add_custom_command(TARGET lightTests POST_BUILD
+    COMMAND lightTests )

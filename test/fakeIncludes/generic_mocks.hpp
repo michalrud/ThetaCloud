@@ -1,10 +1,18 @@
 #pragma once
 
 #include "gmock/gmock.h"
+#include "ThetaCloud.h"
 
 struct MockCallback
 {
 	MOCK_METHOD1(callback, void(const SensorData& data));
+	std::function<void(const SensorData&)> getCallback()
+	{
+		return [this](const SensorData& d)
+		{
+			callback(d);
+		};
+	};
 };
 
 struct MockReadHandler
