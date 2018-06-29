@@ -112,3 +112,53 @@ TEST_F(ThetaCloudWithExampleWriteHandler, WritingCausesAnAction) {
 	}));
 	testedThetaCloud.write(dataToBeSent);
 }
+
+TEST_F(ThetaCloudWithExampleWriteHandler, DoubleSubscribeDoesntDoAnything) {
+	const std::string EXAMPLE_WRITTEN_VALUE("example value");
+	const auto dataToBeSent = SensorData{TEST_TOPIC, EXAMPLE_WRITTEN_VALUE};
+	MockWriteHandler secondMockWriteHandler;
+	EXPECT_CALL(secondMockWriteHandler, writeHandler(_, _)).Times(0);
+
+	auto secondWriteHandlerToken = testedThetaCloud.addWriteHandler(TEST_TOPIC,
+			[&](const SensorData& data, const ThetaCloud::Emit& emit) {
+				secondMockWriteHandler.writeHandler(data, emit);
+	});
+
+	EXPECT_CALL((*Wire.mock), begin(2, 14)).Times(1);
+	testedThetaCloud.init();
+	EXPECT_CALL(mockCallback, callback(dataToBeSent));
+	EXPECT_CALL(mockWriteHandler, writeHandler(dataToBeSent, _)).WillOnce(Invoke(
+		[this](const SensorData& data, const ThetaCloud::Emit& emit){
+			emit(data);
+	}));
+	testedThetaCloud.write(dataToBeSent);
+}
+
+TEST_F(ThetaCloudWithExampleWriteHandler, Resubscription) {
+	const std::string EXAMPLE_WRITTEN_VALUE("example value");
+	const std::string OTHER_WRITTEN_VALUE("other value");
+	const auto dataToBeSent = SensorData{TEST_TOPIC, EXAMPLE_WRITTEN_VALUE};
+	const auto otherDataToBeSent = SensorData{TEST_TOPIC, OTHER_WRITTEN_VALUE};
+
+	EXPECT_CALL((*Wire.mock), begin(2, 14)).Times(1);
+	testedThetaCloud.init();
+	EXPECT_CALL(mockCallback, callback(dataToBeSent));
+	EXPECT_CALL(mockWriteHandler, writeHandler(dataToBeSent, _)).WillOnce(Invoke(
+		[this](const SensorData& data, const ThetaCloud::Emit& emit){
+			emit(data);
+	}));
+	testedThetaCloud.write(dataToBeSent);
+
+	MockWriteHandler secondMockWriteHandler;
+	writeHandlerToken.reset();	// unsubscribe an old handler
+	auto secondWriteHandlerToken = testedThetaCloud.addWriteHandler(TEST_TOPIC,
+			[&](const SensorData& data, const ThetaCloud::Emit& emit) {
+				secondMockWriteHandler.writeHandler(data, emit);
+	});
+	EXPECT_CALL(secondMockWriteHandler, writeHandler(otherDataToBeSent, _)).WillOnce(Invoke(
+		[this](const SensorData& data, const ThetaCloud::Emit& emit){
+			emit(data);
+	}));
+	EXPECT_CALL(mockCallback, callback(otherDataToBeSent));
+	testedThetaCloud.write(otherDataToBeSent);
+}

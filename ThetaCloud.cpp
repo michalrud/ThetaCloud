@@ -30,12 +30,15 @@ DeviceHandlerTokenPtr ThetaCloud::addReadHandler(const DeviceReadHandler& handle
 DeviceHandlerTokenPtr ThetaCloud::addWriteHandler(const std::string& topic, const DeviceWriteHandler& handler)
 {
 	auto it = deviceWriteHandlers.insert(std::make_pair(topic, handler));
-	assert(it.second);
-	auto elementIterator = it.first;
-	return std::unique_ptr<DeviceHandlerToken>(
-		new DeviceHandlerToken([elementIterator, this](){
-			deviceWriteHandlers.erase(elementIterator);
-	}));
+	if (it.second)
+	{
+		auto elementIterator = it.first;
+		return std::unique_ptr<DeviceHandlerToken>(
+			new DeviceHandlerToken([elementIterator, this](){
+				deviceWriteHandlers.erase(elementIterator);
+		}));
+	}
+	else return DeviceHandlerTokenPtr();		
 }
 
 void ThetaCloud::write(const SensorData& data) const
