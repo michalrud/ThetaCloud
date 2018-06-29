@@ -11,4 +11,27 @@ It consists of:
 * Extension modules that can be plugged into the main board with possibility of designing new ones,
 * Arduino library that can be used for designing actual systems using ThetaCloud, with example implementation basing on MQTT being provided.
 
- 
+Basic Usage
+-----------
+
+Most of the time the user will want to use this code as an Arduino IDE library. To do so, take the .zip file containing
+the code and add the library using the Arduino IDE: ``Sketch -> Include Library -> Add .ZIP Library``.
+
+After that the library is ready to be included in your sketches using regular ``#include`` directives. 
+
+Running the tests
+-----------------
+
+ThetaCloud library comes with the test suite. To run it perform the regular CMake build:
+
+.. code-block:: sh
+	
+	mkdir build
+	cd build
+	cmake ..
+	make -j4
+
+``make`` will automatically run all tests during the build process.
+
+Building the library using CMake is not required, as Arduino IDE builds its libraries on its own. Therefore, if you
+don't plan on running the test suite, you don't need CMake.
