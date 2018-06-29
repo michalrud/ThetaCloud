@@ -11,10 +11,14 @@ using ::testing::Invoke;
 
 const auto TEST_SENSOR_DATA = SensorData{"TEST_TOPIC", "EXAMPLE_WRITTEN_VALUE"};
 
-struct ThetaCloudFixture : public GenericTest {
+struct ThetaCloudWithoutDataCallbackFixture : public GenericTest {
 protected:
 	MockCallback mockCallback;
 	ThetaCloud testedThetaCloud;
+};
+
+struct ThetaCloudFixture : public ThetaCloudWithoutDataCallbackFixture {
+protected:
 	ThetaCloudFixture()
 	{
 		testedThetaCloud.whenDataAvailable([this](const SensorData& data) {
@@ -51,6 +55,12 @@ struct ThetaCloudWithExampleWriteHandler : public ThetaCloudFixture {
 };
 
 TEST_F(ThetaCloudWithExampleReadHandler, ReadCallbacksNotCalledWhenNotInitialized) {
+	testedThetaCloud.tick();
+}
+
+TEST_F(ThetaCloudWithoutDataCallbackFixture, ReceivingDataWithoutDataHandlerDoesNotDoAnything) {
+	auto readHandlerToken = testedThetaCloud.addReadHandler(
+		[this](const ThetaCloud::Emit& e) {e(TEST_SENSOR_DATA);	});
 	testedThetaCloud.tick();
 }
 
