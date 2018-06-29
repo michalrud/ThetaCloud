@@ -25,6 +25,7 @@ public:
 	DeviceHandlerTokenPtr addReadHandler(const DeviceReadHandler& handler);
 	DeviceHandlerTokenPtr addWriteHandler(const std::string& topic, const DeviceWriteHandler& handler);
 	void write(const SensorData& data) const;
+	void emit(const SensorData& data) const;
 	void tick();
 private:
 

@@ -50,6 +50,11 @@ void ThetaCloud::write(const SensorData& data) const
 	}
 }
 
+void ThetaCloud::emit(const SensorData& data) const
+{
+	this->dataCallback(data);
+}
+
 void ThetaCloud::tick()
 {
 	if (!initialized) return;

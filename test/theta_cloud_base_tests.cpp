@@ -73,6 +73,13 @@ TEST_F(ThetaCloudWithExampleReadHandler, ReadCallbacksCalledWhenInitialized) {
 	testedThetaCloud.tick();
 }
 
+TEST_F(ThetaCloudWithExampleReadHandler, EmitMethodPublishesTheDataImmediately) {
+	EXPECT_CALL((*Wire.mock), begin(2, 14)).Times(1);
+	testedThetaCloud.init();
+	EXPECT_CALL(mockCallback, callback(TEST_SENSOR_DATA));
+	testedThetaCloud.emit(TEST_SENSOR_DATA);
+}
+
 TEST_F(ThetaCloudFixture, NothingHappensWhenThereAreNoReadCallbacks) {
 	EXPECT_CALL((*Wire.mock), begin(2, 14)).Times(1);
 	testedThetaCloud.init();
