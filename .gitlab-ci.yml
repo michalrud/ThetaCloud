@@ -2,6 +2,9 @@ stages:
   - test
   - doc
 
+variables:
+  DEBIAN_FRONTEND: "noninteractive"
+
 test:
   image: gcc:latest
   stage: test
@@ -18,8 +21,8 @@ doc:
   stage: doc
   script:
     - apt-get update -y
-    - apt-get install python3-sphinx make -y
-    - pip install sphinxcontrib-mermaid
+    - apt-get install python3-sphinx python3-pip make -y
+    - pip3 install sphinxcontrib-mermaid
     - sphinx-build -b html . ./_build
     - mv _build/ public/
   artifacts:
