@@ -42,7 +42,7 @@ ThetaCloudCO2::SensorGetValue ThetaCloudCO2::GetCo2Level()
 	if (dataFromSensor.second) return ERROR;
     uint8_t raw_co2 = dataFromSensor.first[0];
     uint8_t raw_voc = dataFromSensor.first[2];
-    // calculations from Prelimenary Datasheet for MiCS-VZ-86/89
+    // calculations from Preliminary Datasheet for MiCS-VZ-86/89
     result.co2Value = (raw_co2 - 13) * (1600 / 229) + 400;
     result.vocValue = (raw_voc - 13) * (1000 / 229);
 	return result;

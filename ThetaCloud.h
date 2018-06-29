@@ -8,11 +8,6 @@
 #include "SensorData.h"
 #include "SensorHandlerToken.h"
 
-#define THETA_SUBSCRIBE() \
-	void thetaSubscribeFunction(const SensorData& sensorData);\
-	ThetaSubscriber ts(thetaCloud, &thetaSubscribeFunction);\
-	void thetaSubscribeFunction(const SensorData& sensorData)
-
 class ThetaCloud
 {
 public:
