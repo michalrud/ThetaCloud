@@ -86,6 +86,14 @@ ThetaCloud
 			.. code-block:: cpp
 
 				void ThetaCloud::init()
+		:Example:
+			.. code-block:: cpp
+
+				void setup()
+				{
+					thetaCloud.init();
+					// initialization of other classes
+				}
 
 	ThetaCloud::whenDataAvailable()
 		Method for registering an :term:`ThetaCloud::Emit` callback to ThetaCloud.
@@ -97,6 +105,21 @@ ThetaCloud
 			.. code-block:: cpp
 
 				void ThetaCloud::whenDataAvailable(const Emit& dataCallback)
+		:Example:
+			.. code-block:: cpp
+
+				void handleSensorData(const SensorData& data)
+				{
+					Serial.println(data.name);
+					Serial.println(data.value);
+				}
+
+				void setup()
+				{
+					//... other initialization
+					//...
+					thetaCloud.whenDataAvailable(handleSensorData);
+				}
 
 	ThetaCloud::addReadHandler()
 		Method for registering an :term:`ThetaCloud::DeviceReadHandler` callback to ThetaCloud.
@@ -105,10 +128,63 @@ ThetaCloud
 		to check if new data can be read from the device. See :term:`ThetaCloud::DeviceReadHandler` description for
 		more information.
 
+			.. note::
+			Deletion of a :term:`DeviceHandlerToken` returned by this function will result in immediate unregistration
+			of the registered callback. Therefore, **the returned value needs to be kept somewhere**. **The following code
+			will not work** and the callback will *never be called*:
+
+			.. code-block:: cpp
+
+				class MyBrokenHandler
+				{
+				public:
+					void handle(const ThetaCloud::Emit& emit)
+					{
+						// Will never be called because of the error!
+						emit(SensorData{"Hello", "There"});
+					}
+					void init()
+					{
+						// WRONG! WILL NOT DO ANYTHING as the return value is
+						// is immediately destroyed
+						thetaCloud.addReadHandler(handle);
+					}
+				};
+
+			See the code example later on to see a proper way to do it.
+
 		:Method signature:
 			.. code-block:: cpp
 
 				DeviceHandlerTokenPtr ThetaCloud::addReadHandler(const DeviceReadHandler& handler)
+		:Example: Warning - after `token` goes out of scope handler will be automatically unregistered.
+
+			.. code-block:: cpp
+
+				auto token = thetaCloud.addReadHandler(
+					[](const ThetaCloud::Emit& emit)
+					{
+						emit("hello", "hi there");
+					});
+		:Example in a class:
+			.. code-block:: cpp
+
+				class MyHandler
+				{
+				public:
+					static void handle(const ThetaCloud::Emit& emit)
+					{
+						emit(SensorData{"Hello", "There"});
+					}
+					void init()
+					{
+						// Token is preserved - the handler will be automatically
+						// unregistered when this instance of MyHandler gets deleted.
+						token = thetaCloud.addReadHandler(handle);
+					}
+				private:
+					DeviceHandlerTokenPtr token;
+				};
 
 	ThetaCloud::addWriteHandler()
 		Method for registering an :term:`ThetaCloud::DeviceWriteHandler` callback to ThetaCloud.
@@ -153,12 +229,13 @@ ThetaCloud
 		
 		See :term:`ThetaCloud::DeviceWriteHandler` description for more information.
 
-		:Method signature:
+		:Method signature: 
 			.. code-block:: cpp
 
 				DeviceHandlerTokenPtr ThetaCloud::addWriteHandler(const std::string& topic,
 					const DeviceWriteHandler& handler)
-		:Example:
+		:Example: Warning - after `token` goes out of scope, the handler will be automatically unregistered.
+
 			.. code-block:: cpp
 
 				auto token = thetaCloud.addWriteHandler("hello",
@@ -174,14 +251,14 @@ ThetaCloud
 				class MyHandler
 				{
 				public:
-					void handle(const SensorData& data, const ThetaCloud::Emit& emit)
+					static void handle(const SensorData& data, const ThetaCloud::Emit& emit)
 					{
 						emit(SensorData{"Hello", "There"});
 					}
 					void init()
 					{
-						// Token is preserved - the handler will be automatically unregistered
-						// when this instance of MyHandler gets deleted.
+						// Token is preserved - the handler will be automatically
+						// unregistered when this instance of MyHandler gets deleted.
 						token = thetaCloud.addWriteHandler("hello", handle);
 					}
 				private:
@@ -189,19 +266,64 @@ ThetaCloud
 				};
 
 	ThetaCloud::write()
+		Method that can be used to publish data to modules registered using :term:`ThetaCloud::addWriteHandler()`.
+
+		Only handler registered to handle ``topic`` that is equal to published ``SensorData.name`` will be called.
+
+		.. note::
+			Publishing data using this function **will not** send it to :term:`ThetaCloud::Emit` function registered
+			via :term:`ThetaCloud::whenDataAvailable()`.
+
+			Use :term:`ThetaCloud::emit()` to send data to currently registered :term:`ThetaCloud::Emit`.
+
 		:Method signature:
 			.. code-block:: cpp
 
 				void ThetaCloud::write(const SensorData& data) const
+		:Example:
+			.. code-block:: cpp
+
+				thetaCloud.write(SensorData{"topic", "value"});
+
+	ThetaCloud::emit()
+		Method that calls the currently registered :term:`ThetaCloud::Emit` callback.
+
+		.. note::
+			Publishing data using this function **will not** send it to any :term:`ThetaCloud::DeviceWriteHandler`.
+			The data will be sent directly to currently registered :term:`ThetaCloud::Emit`.
+
+			To send data to :term:`ThetaCloud::DeviceWriteHandler`, use :term:`ThetaCloud::write()`.
+
+		:Method signature:
+			.. code-block:: cpp
+
+				void ThetaCloud::emit(const SensorData& data) const
+		:Example:
+			.. code-block:: cpp
+
+				thetaCloud.emit(SensorData{"topic", "value"});
 
 	ThetaCloud::tick()
+		Method that should be called in the application's main loop (in case of Arduino, in the ``loop()`` function).
+
+		Currently calls all registered :term:`ThetaCloud::DeviceReadHandler` callbacks, but the exact functionality may be
+		changed in the future.
+
 		:Method signature:
 			.. code-block:: cpp
 
 				void ThetaCloud::tick()
+		:Example:
+			.. code-block:: cpp
+
+				void loop()
+				{
+					thetaCloud.tick();
+					delay(5000);
+				}
 
 	DeviceHandlerToken
-		Token that ensures that given handler (either :term:`ThetaCloud::DeviceReadHandler` or :term:`DeviceWriteHandler`)
+		Token that ensures that given handler (either :term:`ThetaCloud::DeviceReadHandler` or :term:`ThetaCloud::DeviceWriteHandler`)
 		is registered to ThetaCloud. When destroyed, automatically unregisters a corresponding handler from ThetaCloud,
 		preventing calls to non-existing handlers, and - in effect - crashes.
 
