@@ -1,9 +1,10 @@
 SensorData
 ==========
 
-A simple structure that holds data either read from or provided to external devices.
-
 .. glossary::
+
+	SensorData
+		A simple structure that holds data either read from or provided to external devices.
 	
 	SensorData::name
 		Name of the sensor which provided the data.
