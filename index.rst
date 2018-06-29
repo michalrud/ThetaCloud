@@ -10,11 +10,15 @@ Welcome to ThetaCloud's documentation!
    :maxdepth: 2
    :caption: Contents:
 
+   README
+   doc/library.rst
+   doc/newboards-sw.rst
+   doc/api.rst
+
 
 
 Indices and tables
-==================
+------------------
 
 * :ref:`genindex`
-* :ref:`modindex`
 * :ref:`search`

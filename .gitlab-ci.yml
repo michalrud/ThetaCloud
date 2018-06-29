@@ -19,6 +19,7 @@ doc:
   script:
     - apt-get update -y
     - apt-get install python3-sphinx make -y
+    - pip install sphinxcontrib-mermaid
     - sphinx-build -b html . ./_build
     - mv _build/ public/
   artifacts:
