@@ -1,7 +1,7 @@
 #include "gtest/gtest.h"
 #include "gmock/gmock.h"
 #include "ThetaCloud.h"
-#include "SensorHandlerToken.h"
+#include "DeviceHandlerToken.h"
 #include "Wire.h"
 #include "testing_utils.hpp"
 #include "fakeIncludes/generic_mocks.hpp"
@@ -33,7 +33,7 @@ struct ThetaCloudWithExampleReadHandler : public ThetaCloudFixture {
 		});
 	}
 
-	SensorHandlerTokenPtr readHandlerToken;
+	DeviceHandlerTokenPtr readHandlerToken;
 };
 
 struct ThetaCloudWithExampleWriteHandler : public ThetaCloudFixture {
@@ -47,7 +47,7 @@ struct ThetaCloudWithExampleWriteHandler : public ThetaCloudFixture {
 		});
 	}
 
-	SensorHandlerTokenPtr writeHandlerToken;
+	DeviceHandlerTokenPtr writeHandlerToken;
 };
 
 TEST_F(ThetaCloudWithExampleReadHandler, ReadCallbacksNotCalledWhenNotInitialized) {

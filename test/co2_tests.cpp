@@ -2,7 +2,7 @@
 #include "gmock/gmock.h"
 #include "ThetaCloud.h"
 #include "ThetaCloudCO2.h"
-#include "SensorHandlerToken.h"
+#include "DeviceHandlerToken.h"
 #include "Wire.h"
 #include "testing_utils.hpp"
 #include "MockThetaCloud.hpp"
@@ -35,13 +35,13 @@ TEST_F(ThetaCloudCO2Tests, NotConnectedBoardShouldNotDoAnythingInInit)
 
 TEST_F(ThetaCloudCO2Tests, ReadingCo2AndVoc)
 {
-	ThetaCloud::SensorReadHandler handler;
+	ThetaCloud::DeviceReadHandler handler;
 	std::map<std::string, float> reportedValues;
 
 	EXPECT_CALL((*arduinoMock), analogRead(A0)).WillOnce(Return(200));
-	EXPECT_CALL((*mockThetaCloud), addReadHandler(_)).WillRepeatedly(::testing::Invoke([&](const ThetaCloud::SensorReadHandler& h){
+	EXPECT_CALL((*mockThetaCloud), addReadHandler(_)).WillRepeatedly(::testing::Invoke([&](const ThetaCloud::DeviceReadHandler& h){
 		handler = h;
-		return SensorHandlerTokenPtr();
+		return DeviceHandlerTokenPtr();
 	}));
 	tested.init();
 

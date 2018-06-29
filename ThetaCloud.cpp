@@ -18,30 +18,30 @@ void ThetaCloud::whenDataAvailable(const std::function<void(const SensorData&)>&
 	this->dataCallback = dataCallback;
 }
 
-SensorHandlerTokenPtr ThetaCloud::addReadHandler(const SensorReadHandler& handler)
+DeviceHandlerTokenPtr ThetaCloud::addReadHandler(const DeviceReadHandler& handler)
 {
-	auto it = sensorReadHandlers.insert(sensorReadHandlers.end(), handler);
-	return std::unique_ptr<SensorHandlerToken>(
-		new SensorHandlerToken([it, this](){
-			sensorReadHandlers.erase(it);
+	auto it = deviceReadHandlers.insert(deviceReadHandlers.end(), handler);
+	return std::unique_ptr<DeviceHandlerToken>(
+		new DeviceHandlerToken([it, this](){
+			deviceReadHandlers.erase(it);
 	}));
 }
 
-SensorHandlerTokenPtr ThetaCloud::addWriteHandler(const std::string& topic, const SensorWriteHandler& handler)
+DeviceHandlerTokenPtr ThetaCloud::addWriteHandler(const std::string& topic, const DeviceWriteHandler& handler)
 {
-	auto it = sensorWriteHandlers.insert(std::make_pair(topic, handler));
+	auto it = deviceWriteHandlers.insert(std::make_pair(topic, handler));
 	assert(it.second);
 	auto elementIterator = it.first;
-	return std::unique_ptr<SensorHandlerToken>(
-		new SensorHandlerToken([elementIterator, this](){
-			sensorWriteHandlers.erase(elementIterator);
+	return std::unique_ptr<DeviceHandlerToken>(
+		new DeviceHandlerToken([elementIterator, this](){
+			deviceWriteHandlers.erase(elementIterator);
 	}));
 }
 
 void ThetaCloud::write(const SensorData& data) const
 {
-	auto handler = sensorWriteHandlers.find(data.name);
-	if (handler != sensorWriteHandlers.end())
+	auto handler = deviceWriteHandlers.find(data.name);
+	if (handler != deviceWriteHandlers.end())
 	{
 		handler->second(data, dataCallback);
 	}
@@ -50,7 +50,7 @@ void ThetaCloud::write(const SensorData& data) const
 void ThetaCloud::tick()
 {
 	if (!initialized) return;
-	for (const auto& handler : sensorReadHandlers) {
+	for (const auto& handler : deviceReadHandlers) {
 		handler(this->dataCallback);
 	}
 }

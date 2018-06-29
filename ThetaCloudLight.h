@@ -3,7 +3,7 @@
 
 #include <memory>
 #include "SensorData.h"
-#include "SensorHandlerToken.h"
+#include "DeviceHandlerToken.h"
 
 class ThetaCloudLight
 {
@@ -14,7 +14,7 @@ private:
 	float read();
 	char dtostrfbuf[15];
 
-	SensorHandlerTokenPtr lightToken;
+	DeviceHandlerTokenPtr lightToken;
 };
 
 extern ThetaCloudLight thetaCloudLight;

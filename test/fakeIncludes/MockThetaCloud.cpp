@@ -12,12 +12,12 @@ void ThetaCloud::whenDataAvailable(const std::function<void(const SensorData&)>&
 	mockThetaCloud->whenDataAvailable(dataCallback);
 }
 
-SensorHandlerTokenPtr ThetaCloud::addReadHandler(const SensorReadHandler& handler)
+DeviceHandlerTokenPtr ThetaCloud::addReadHandler(const DeviceReadHandler& handler)
 {
 	return mockThetaCloud->addReadHandler(handler);
 }
 
-SensorHandlerTokenPtr ThetaCloud::addWriteHandler(const std::string& topic, const SensorWriteHandler& handler)
+DeviceHandlerTokenPtr ThetaCloud::addWriteHandler(const std::string& topic, const DeviceWriteHandler& handler)
 {
 	return mockThetaCloud->addWriteHandler(topic, handler);
 }

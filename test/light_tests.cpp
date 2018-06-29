@@ -27,7 +27,7 @@ struct ThetaCloudLightTests : public MockedThetaCloudTests
 
 TEST_F(ThetaCloudLightTests, ReadingLightSensor)
 {
-	ThetaCloud::SensorReadHandler readHandler;
+	ThetaCloud::DeviceReadHandler readHandler;
 	EXPECT_CALL((*Wire.mock), beginTransmission(ISL29023_ADDRESS)).InSequence(s);
 	EXPECT_CALL((*Wire.mock), write(COMMAND1_REGISTER)).InSequence(s);
 	EXPECT_CALL((*Wire.mock), write(CONTINOUS_AMBIENT_LIGHT_MEAS)).InSequence(s);
@@ -36,9 +36,9 @@ TEST_F(ThetaCloudLightTests, ReadingLightSensor)
 	EXPECT_CALL((*Wire.mock), write(COMMAND2_REGISTER)).InSequence(s);
 	EXPECT_CALL((*Wire.mock), write(FULL_RANGE_64k_16BIT)).InSequence(s);
 	EXPECT_CALL((*Wire.mock), endTransmission()).InSequence(s);
-	EXPECT_CALL((*mockThetaCloud), addReadHandler(_)).WillOnce(::testing::Invoke([&](const ThetaCloud::SensorReadHandler& h){
+	EXPECT_CALL((*mockThetaCloud), addReadHandler(_)).WillOnce(::testing::Invoke([&](const ThetaCloud::DeviceReadHandler& h){
 		readHandler = h;
-		return SensorHandlerTokenPtr();
+		return DeviceHandlerTokenPtr();
 	}));
 	tested.init();
 

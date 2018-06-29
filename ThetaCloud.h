@@ -6,14 +6,14 @@
 #include <memory>
 #include <functional>
 #include "SensorData.h"
-#include "SensorHandlerToken.h"
+#include "DeviceHandlerToken.h"
 
 class ThetaCloud
 {
 public:
 	using Emit = std::function<void(const SensorData&)>;
-	using SensorReadHandler = std::function<void(const Emit&)>;
-	using SensorWriteHandler = std::function<void(const SensorData&, const Emit&)>;
+	using DeviceReadHandler = std::function<void(const Emit&)>;
+	using DeviceWriteHandler = std::function<void(const SensorData&, const Emit&)>;
 	ThetaCloud() :
 		dataCallback([](const SensorData&){}),
 		initialized(false)
@@ -22,16 +22,16 @@ public:
 
 	void init();
 	void whenDataAvailable(const Emit& dataCallback);
-	SensorHandlerTokenPtr addReadHandler(const SensorReadHandler& handler);
-	SensorHandlerTokenPtr addWriteHandler(const std::string& topic, const SensorWriteHandler& handler);
+	DeviceHandlerTokenPtr addReadHandler(const DeviceReadHandler& handler);
+	DeviceHandlerTokenPtr addWriteHandler(const std::string& topic, const DeviceWriteHandler& handler);
 	void write(const SensorData& data) const;
 	void tick();
 private:
 
 	Emit dataCallback;
 	bool initialized;
-	std::list<SensorReadHandler> sensorReadHandlers;
-	std::map<std::string, SensorWriteHandler> sensorWriteHandlers;
+	std::list<DeviceReadHandler> deviceReadHandlers;
+	std::map<std::string, DeviceWriteHandler> deviceWriteHandlers;
 };
 
 extern ThetaCloud thetaCloud;

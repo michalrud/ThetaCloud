@@ -5,7 +5,7 @@ ThetaCloud
 	
 	ThetaCloud::Emit
 		Function definition for callback that will be called by ThetaCloud every time a new data is available from
-		sensors. Can publish this data further or just print it using ``Serial``.
+		devices. Can publish this data further or just print it using ``Serial``.
 		
 		:Signature:
 			.. code-block:: cpp
@@ -29,7 +29,7 @@ ThetaCloud
 					Serial.println(data.value);
 				};
 
-	ThetaCloud::SensorReadHandler
+	ThetaCloud::DeviceReadHandler
 		Function definition for callback that will be called each time ThetaCloud requests new data to be read,
 		if available. Currently each registered handler will be called once when :term:`ThetaCloud::tick()` is called.
 
@@ -44,7 +44,7 @@ ThetaCloud
 		:Signature:
 			.. code-block:: cpp
 
-				using SensorReadHandler = std::function<void(const Emit&)>;
+				using DeviceReadHandler = std::function<void(const Emit&)>;
 		:Parameter Emit: Callback which should be used to provide data from sensor to the rest of the ThetaCloud.
 		:Example implementation:
 			.. code-block:: cpp
@@ -61,8 +61,8 @@ ThetaCloud
 					emit(SensorData{"MySensor", "My value"});
 				};
 
-	ThetaCloud::SensorWriteHandler
-		hello
+	ThetaCloud::DeviceWriteHandler
+		Function definition for callback that will be called, when 
 
 	ThetaCloud::init()
 		:Method signature:
@@ -84,7 +84,7 @@ ThetaCloud
 		:Method signature:
 			.. code-block:: cpp
 
-				SensorHandlerTokenPtr ThetaCloud::addReadHandler(const SensorReadHandler& handler)
+				DeviceHandlerTokenPtr ThetaCloud::addReadHandler(const DeviceReadHandler& handler)
 
 		hello
 
@@ -92,7 +92,7 @@ ThetaCloud
 		:Method signature:
 			.. code-block:: cpp
 
-				SensorHandlerTokenPtr ThetaCloud::addWriteHandler(const std::string& topic, const SensorWriteHandler& handler)
+				DeviceHandlerTokenPtr ThetaCloud::addWriteHandler(const std::string& topic, const DeviceWriteHandler& handler)
 
 		hello
 
@@ -112,6 +112,6 @@ ThetaCloud
 
 		hello
 
-	SensorHandlerToken
-	SensorHandlerTokenPtr
+	DeviceHandlerToken
+	DeviceHandlerTokenPtr
 		hello

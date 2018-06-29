@@ -3,7 +3,7 @@
 
 #include "Arduino.h"
 #include <memory>
-#include "SensorHandlerToken.h"
+#include "DeviceHandlerToken.h"
 
 class ThetaCloudHumidity
 {
@@ -23,8 +23,8 @@ protected:
 
 	static SensorGetValue GetValue(uint8_t command);
 
-	SensorHandlerTokenPtr humidityToken;
-	SensorHandlerTokenPtr temperatureToken;
+	DeviceHandlerTokenPtr humidityToken;
+	DeviceHandlerTokenPtr temperatureToken;
 };
 
 extern ThetaCloudHumidity thetaCloudHumidity;

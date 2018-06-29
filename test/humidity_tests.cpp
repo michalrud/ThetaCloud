@@ -2,7 +2,7 @@
 #include "gmock/gmock.h"
 #include "ThetaCloud.h"
 #include "ThetaCloudHumidity.h"
-#include "SensorHandlerToken.h"
+#include "DeviceHandlerToken.h"
 #include "Wire.h"
 #include "testing_utils.hpp"
 #include "MockThetaCloud.hpp"
@@ -25,10 +25,10 @@ struct ThetaCloudHumidityTests : public MockedThetaCloudTests
 
 TEST_F(ThetaCloudHumidityTests, ReadingHumidity)
 {
-	std::list<ThetaCloud::SensorReadHandler> handlers;
-	EXPECT_CALL((*mockThetaCloud), addReadHandler(_)).WillRepeatedly(::testing::Invoke([&](const ThetaCloud::SensorReadHandler& h){
+	std::list<ThetaCloud::DeviceReadHandler> handlers;
+	EXPECT_CALL((*mockThetaCloud), addReadHandler(_)).WillRepeatedly(::testing::Invoke([&](const ThetaCloud::DeviceReadHandler& h){
 		handlers.push_back(h);
-		return SensorHandlerTokenPtr();
+		return DeviceHandlerTokenPtr();
 	}));
 	tested.init();
 
@@ -55,10 +55,10 @@ TEST_F(ThetaCloudHumidityTests, ReadingHumidity)
 
 TEST_F(ThetaCloudHumidityTests, ReadingTemperature)
 {
-	std::list<ThetaCloud::SensorReadHandler> handlers;
-	EXPECT_CALL((*mockThetaCloud), addReadHandler(_)).WillRepeatedly(::testing::Invoke([&](const ThetaCloud::SensorReadHandler& h){
+	std::list<ThetaCloud::DeviceReadHandler> handlers;
+	EXPECT_CALL((*mockThetaCloud), addReadHandler(_)).WillRepeatedly(::testing::Invoke([&](const ThetaCloud::DeviceReadHandler& h){
 		handlers.push_back(h);
-		return SensorHandlerTokenPtr();
+		return DeviceHandlerTokenPtr();
 	}));
 	tested.init();
 
