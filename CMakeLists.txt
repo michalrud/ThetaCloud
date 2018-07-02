@@ -40,28 +40,28 @@ set (theta_cloud_base_tests test/main.cpp test/theta_cloud_base_tests.cpp)
 add_executable(thetaCloudBaseTests ${theta_cloud_base_tests} ${thetaCloudBaseSrc} ${fakeCpps})
 target_link_libraries( thetaCloudBaseTests libgtest libgmock)
 add_custom_command(TARGET thetaCloudBaseTests POST_BUILD
-	COMMAND thetaCloudBaseTests )
+	COMMAND thetaCloudBaseTests --gtest_color=yes )
 
 set (i2c_helpers_tests test/main.cpp test/i2c_helpers_tests.cpp)
 add_executable(i2cHelpersTests ${i2c_helpers_tests} ${thetaCloudBaseSrc} ${fakeCpps})
 target_link_libraries( i2cHelpersTests libgtest libgmock)
 add_custom_command(TARGET i2cHelpersTests POST_BUILD
-    COMMAND i2cHelpersTests )
+    COMMAND i2cHelpersTests --gtest_color=yes )
 
 set (light_tests test/main.cpp test/light_tests.cpp)
 add_executable(lightTests ${light_tests} ThetaCloudLight.cpp ${fakeCpps} ${thetaCloudBaseMockSrc})
 target_link_libraries( lightTests libgtest libgmock)
 add_custom_command(TARGET lightTests POST_BUILD
-    COMMAND lightTests )
+    COMMAND lightTests --gtest_color=yes )
 
 set (humidity_tests test/main.cpp test/humidity_tests.cpp)
 add_executable(humidityTests ${humidity_tests} ThetaCloudHumidity.cpp ${fakeCpps} ${thetaCloudBaseMockSrc})
 target_link_libraries( humidityTests libgtest libgmock)
 add_custom_command(TARGET humidityTests POST_BUILD
-    COMMAND humidityTests )
+    COMMAND humidityTests --gtest_color=yes )
 
 set (environment_tests test/main.cpp test/environment_tests.cpp)
 add_executable(envTests ${environment_tests} ThetaCloudEnvironment.cpp ${fakeCpps} ${thetaCloudBaseMockSrc})
 target_link_libraries( envTests libgtest libgmock)
 add_custom_command(TARGET envTests POST_BUILD
-    COMMAND envTests )
+    COMMAND envTests --gtest_color=yes )
