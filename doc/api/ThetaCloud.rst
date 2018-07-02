@@ -189,9 +189,10 @@ ThetaCloud
 	ThetaCloud::addWriteHandler()
 		Method for registering an :term:`ThetaCloud::DeviceWriteHandler` callback to ThetaCloud.
 
-		In other words, callbacks provided using this method will be called when a data will be available to the device.
+		In other words, callbacks provided using this method will be called when a data will be
+		available to the device for *consumption*.
 
-		For data to become available for the device, it needs to be provided to ThetaCloud using the
+		For data to be consumed by the device, it needs to be provided to ThetaCloud using the
 		:term:`ThetaCloud::write()` method, and the ``name`` field of ``SensorData`` needs to be equal to the
 		``topic`` argument passed during the registration.
 
@@ -266,9 +267,10 @@ ThetaCloud
 				};
 
 	ThetaCloud::write()
-		Method that can be used to publish data to modules registered using :term:`ThetaCloud::addWriteHandler()`.
+		Method that can be used to publish data to modules registered using :term:`ThetaCloud::addWriteHandler()` so
+		it can be *consumed*.
 
-		Only handler registered to handle ``topic`` that is equal to published ``SensorData.name`` will be called.
+		Only handler registered to consume ``topic`` that is equal to published ``SensorData.name`` will be called.
 
 		.. note::
 			Publishing data using this function **will not** send it to :term:`ThetaCloud::Emit` function registered
@@ -289,8 +291,8 @@ ThetaCloud
 		Method that calls the currently registered :term:`ThetaCloud::Emit` callback.
 
 		.. note::
-			Publishing data using this function **will not** send it to any :term:`ThetaCloud::DeviceWriteHandler`.
-			The data will be sent directly to currently registered :term:`ThetaCloud::Emit`.
+			Publishing data using this function **will not** send it to any :term:`ThetaCloud::DeviceWriteHandler`
+			for consumption. The data will be sent directly to currently registered :term:`ThetaCloud::Emit`.
 
 			To send data to :term:`ThetaCloud::DeviceWriteHandler`, use :term:`ThetaCloud::write()`.
 
