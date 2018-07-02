@@ -29,8 +29,8 @@ void ThetaCloudCO2::init()
 	co2Token = thetaCloud.addReadHandler([this](const ThetaCloud::Emit& emit) {
 		auto measurementResult = GetCo2Level();
 		if (measurementResult.error) return;
-		emit(SensorData{std::string("co2"), floatToString(measurementResult.co2Value)});
-		emit(SensorData{std::string("voc"), floatToString(measurementResult.vocValue)});
+		emit(SensorData{std::string("co2"), to_string(measurementResult.co2Value)});
+		emit(SensorData{std::string("voc"), to_string(measurementResult.vocValue)});
 	});
 }
 

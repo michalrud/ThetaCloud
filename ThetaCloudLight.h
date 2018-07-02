@@ -12,7 +12,6 @@ public:
 	void init();
 private:
 	float read();
-	char dtostrfbuf[15];
 
 	DeviceHandlerTokenPtr lightToken;
 };

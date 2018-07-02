@@ -3,6 +3,6 @@
 
 #include <string>
 
-std::string floatToString(float val);
+std::string to_string(float val);
 
 #endif  // THETA_CLOUD_UTILS_H

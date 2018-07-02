@@ -46,7 +46,7 @@ void ThetaCloudLight::init()
 		.write(COMMAND2_REGISTER).write(FULL_SCALE_RANGE_64000);
 
 	lightToken = thetaCloud.addReadHandler([this](const ThetaCloud::Emit& emit) {
-		emit(SensorData{std::string("light"), floatToString(read())});
+		emit(SensorData{std::string("light"), to_string(read())});
 	});
 }
 
