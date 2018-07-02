@@ -1,4 +1,4 @@
-Programming ThetaCloud
+Flashing ThetaCloud HW
 ======================
 
 ThetaCloud can be programmed using Arduino IDE. As ESP8266 is the base of ThetaCloud, a lot of useful information

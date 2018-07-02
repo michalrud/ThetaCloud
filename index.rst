@@ -11,7 +11,7 @@ Welcome to ThetaCloud's documentation!
    :caption: Contents:
 
    README
-   doc/programming.rst
+   doc/flashing.rst
    doc/library.rst
    doc/newboards-sw.rst
    doc/api.rst
