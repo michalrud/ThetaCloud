@@ -1,4 +1,4 @@
-#include "ThetaCloudCO2.h"
+#include "ThetaCloudEnvironment.h"
 #include "ThetaCloud.h"
 #include "Arduino.h"
 #include "I2CHelpers.h"
@@ -7,12 +7,12 @@
 const uint8_t MICS_VZ_89_ADDRESS = 0x70;
 const uint8_t GET_STATUS_COMMAND = 0b00001001;
 
-ThetaCloudCO2::ThetaCloudCO2() :
+ThetaCloudEnvironment::ThetaCloudEnvironment() :
 	enabled(false)
 {
 }
 
-void ThetaCloudCO2::init()
+void ThetaCloudEnvironment::init()
 {
 	// is this board connected?
 	auto adcValue = analogRead(A0);
@@ -27,19 +27,21 @@ void ThetaCloudCO2::init()
 	}
 	// actual initialization if board is detected
 	co2Token = thetaCloud.addReadHandler([this](const ThetaCloud::Emit& emit) {
-		auto measurementResult = GetCo2Level();
-		if (measurementResult.error) return;
-		emit(SensorData{std::string("co2"), to_string(measurementResult.co2Value)});
-		emit(SensorData{std::string("voc"), to_string(measurementResult.vocValue)});
+		auto co2MeasurementResult = GetAirReadings();
+		if (!co2MeasurementResult.error)
+		{
+			emit(SensorData{std::string("co2"), to_string(co2MeasurementResult.co2Value)});
+			emit(SensorData{std::string("voc"), to_string(co2MeasurementResult.vocValue)});
+		}
 	});
 }
 
-ThetaCloudCO2::SensorGetValue ThetaCloudCO2::GetCo2Level()
+ThetaCloudEnvironment::AirSensorValue ThetaCloudEnvironment::GetAirReadings()
 {
-	SensorGetValue result = {0, 0, false};
+	AirSensorValue result = {0, 0, false};
 	WriteToI2C(MICS_VZ_89_ADDRESS).write(GET_STATUS_COMMAND);
 	auto dataFromSensor = ReadFromI2C<6>(MICS_VZ_89_ADDRESS);
-	if (dataFromSensor.second) return ERROR;
+	if (dataFromSensor.second) return AIR_ERROR;
     uint8_t raw_co2 = dataFromSensor.first[0];
     uint8_t raw_voc = dataFromSensor.first[2];
     // calculations from Preliminary Datasheet for MiCS-VZ-86/89
@@ -48,4 +50,4 @@ ThetaCloudCO2::SensorGetValue ThetaCloudCO2::GetCo2Level()
 	return result;
 }
 
-ThetaCloudCO2 thetaCloudCO2;
+ThetaCloudEnvironment thetaCloudEnvironment;

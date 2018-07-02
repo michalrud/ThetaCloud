@@ -1,7 +1,7 @@
 #include "gtest/gtest.h"
 #include "gmock/gmock.h"
 #include "ThetaCloud.h"
-#include "ThetaCloudCO2.h"
+#include "ThetaCloudEnvironment.h"
 #include "DeviceHandlerToken.h"
 #include "Wire.h"
 #include "testing_utils.hpp"
@@ -15,14 +15,14 @@ using ::testing::Return;
 const uint8_t MICS_VZ_89_ADDRESS = 0x70;
 const uint8_t GET_STATUS_COMMAND = 0b00001001;
 
-struct ThetaCloudCO2Tests : public MockedThetaCloudTests
+struct ThetaCloudEnvironmentTests : public MockedThetaCloudTests
 {
-	ThetaCloudCO2 tested;
+	ThetaCloudEnvironment tested;
 	MockCallback mockCallback;
 	::testing::Sequence s;
 };
 
-TEST_F(ThetaCloudCO2Tests, NotConnectedBoardShouldNotDoAnythingInInit)
+TEST_F(ThetaCloudEnvironmentTests, NotConnectedBoardShouldNotDoAnythingInInit)
 {
 	EXPECT_CALL((*mockThetaCloud), addReadHandler(_)).Times(0);
 
@@ -33,7 +33,7 @@ TEST_F(ThetaCloudCO2Tests, NotConnectedBoardShouldNotDoAnythingInInit)
 	tested.init();
 }
 
-TEST_F(ThetaCloudCO2Tests, ReadingCo2AndVoc)
+TEST_F(ThetaCloudEnvironmentTests, ReadingCo2AndVoc)
 {
 	ThetaCloud::DeviceReadHandler handler;
 	std::map<std::string, float> reportedValues;

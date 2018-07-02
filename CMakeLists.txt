@@ -60,8 +60,8 @@ target_link_libraries( humidityTests libgtest libgmock)
 add_custom_command(TARGET humidityTests POST_BUILD
     COMMAND humidityTests )
 
-set (co2_tests test/main.cpp test/co2_tests.cpp)
-add_executable(co2Tests ${co2_tests} ThetaCloudCO2.cpp ${fakeCpps} ${thetaCloudBaseMockSrc})
-target_link_libraries( co2Tests libgtest libgmock)
-add_custom_command(TARGET co2Tests POST_BUILD
-    COMMAND co2Tests )
+set (environment_tests test/main.cpp test/environment_tests.cpp)
+add_executable(envTests ${environment_tests} ThetaCloudEnvironment.cpp ${fakeCpps} ${thetaCloudBaseMockSrc})
+target_link_libraries( envTests libgtest libgmock)
+add_custom_command(TARGET envTests POST_BUILD
+    COMMAND envTests )
