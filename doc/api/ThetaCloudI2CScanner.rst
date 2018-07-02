@@ -7,12 +7,10 @@ Publishes
 ---------
 
 :i2c-devices:
-	Result of the I2C device scan in format of hexadecimal address list delimeted by commas.
-	Example:
+	Result of the I2C device scan.
 
-	..
-
-		0x12, 0x34
+	:format: List of hexadecimal address list delimeted by commas.
+		Example: ``0x12, 0x34``
 
 Consumes
 --------

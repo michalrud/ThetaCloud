@@ -7,7 +7,10 @@ Publishes
 ---------
 
 :light:
-	Measured light value, as float.
+	Measured light value.
+	
+	:units:	``[Lux]``
+	:format: ``float``
 
 Consumes
 --------

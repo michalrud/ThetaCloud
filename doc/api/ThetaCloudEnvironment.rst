@@ -20,11 +20,17 @@ Publishes
 ---------
 
 :co2:
-	Current level of CO2 as detected by ``MICS-VZ-89F``, as a float.
+	Current level of CO2 as detected by ``MICS-VZ-89F``.
+
+	:units:	``[ppm]``
+	:format: ``float``
 
 :voc:
 	Current level of Volatile Organic Compounds (VOCs), as detected by
-	``MICS-VZ-89F``, as a float.
+	``MICS-VZ-89F``.
+
+	:units:	``[ppb]``
+	:format: ``float``
 
 .. note::
 	Following readings may not always be available. See :ref:`mpl3115A2`
@@ -32,11 +38,20 @@ Publishes
 :altitude:
 	Detected altitude.
 
+	:units:	``[m]``
+	:format:	``float``
+
 :pressure:
-	Pressure in ``[Pa]``.
+	Pressure.
+
+	:units:	``[Pa]``
+	:format: ``float``
 
 :envTemp:
-	Detected temperature in ``[C]``.
+	Temperature detected by the extension board.
+
+	:units:	``[C]``
+	:format: ``float``
 
 Consumes
 --------
