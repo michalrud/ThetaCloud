@@ -1,7 +1,7 @@
 #include <Utils.h>
 #include <string>
 
-std::string floatToString(float val)
+std::string to_string(float val)
 {
 	return std::to_string(val);
 }
