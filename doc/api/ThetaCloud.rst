@@ -128,7 +128,7 @@ ThetaCloud
 		to check if new data can be read from the device. See :term:`ThetaCloud::DeviceReadHandler` description for
 		more information.
 
-			.. note::
+		.. note::
 			Deletion of a :term:`DeviceHandlerToken` returned by this function will result in immediate unregistration
 			of the registered callback. Therefore, **the returned value needs to be kept somewhere**. **The following code
 			will not work** and the callback will *never be called*:
