@@ -35,3 +35,10 @@ ThetaCloud library comes with the test suite. To run it perform the regular CMak
 
 Building the library using CMake is not required, as Arduino IDE builds its libraries on its own. Therefore, if you
 don't plan on running the test suite, you don't need CMake.
+
+Used libraries
+--------------
+
+ * Parts derived from `Sodaq_SHT2x <https://github.com/SodaqMoja/Sodaq_SHT2x>`_ library.
+ * Parts derived from `isl29023 Arduino library <https://github.com/perelloc/isl29023>`_.
+ * Parts devived from `Adafruit MPL3115A2 Library <https://github.com/adafruit/Adafruit_MPL3115A2_Library>`_.
