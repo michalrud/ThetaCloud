@@ -9,3 +9,13 @@ int analogRead(uint8_t pin)
 {
 	return arduinoMock->analogRead(pin);
 }
+
+int digitalRead(uint8_t pin)
+{
+	return arduinoMock->digitalRead(pin);
+}
+
+void pinMode(uint8_t pin, int pinMode)
+{
+	arduinoMock->pinMode(pin, pinMode);
+}

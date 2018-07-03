@@ -65,3 +65,9 @@ add_executable(envTests ${environment_tests} ThetaCloudEnvironment.cpp ${fakeCpp
 target_link_libraries( envTests libgtest libgmock)
 add_custom_command(TARGET envTests POST_BUILD
     COMMAND envTests --gtest_color=yes )
+
+set (pir_tests test/main.cpp test/pir_tests.cpp)
+add_executable(pirTests ${pir_tests} ThetaCloudPIR.cpp ${fakeCpps} ${thetaCloudBaseMockSrc})
+target_link_libraries( pirTests libgtest libgmock)
+add_custom_command(TARGET pirTests POST_BUILD
+    COMMAND pirTests --gtest_color=yes )
