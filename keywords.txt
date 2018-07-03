@@ -29,4 +29,5 @@ thetaCloudRelay	LITERAL1
 thetaCloudHumidity	LITERAL1
 thetaCloudEnvironment	LITERAL1
 thetaCloudI2CScanner	LITERAL1
+thetaCloudPIR	LITERAL1
 sensorData	LITERAL1
