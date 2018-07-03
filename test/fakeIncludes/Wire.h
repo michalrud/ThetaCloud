@@ -2,7 +2,7 @@
 #include <memory>
 #include "gmock/gmock.h"
 
-struct WireMock
+struct NiceWireMock
 {
 	MOCK_METHOD2(begin, void(uint8_t, uint8_t));
 	MOCK_METHOD2(requestFrom, void(uint8_t, uint8_t));
@@ -12,6 +12,7 @@ struct WireMock
 	MOCK_METHOD0(read, uint8_t());
 	MOCK_METHOD0(endTransmission, void());
 };
+using WireMock = ::testing::StrictMock<NiceWireMock>;
 
 struct WireProxy
 {

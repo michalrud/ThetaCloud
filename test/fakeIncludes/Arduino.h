@@ -5,11 +5,12 @@
 
 const uint8_t A0 = 0x76;
 
-struct ArduinoMock
+struct NiceArduinoMock
 {
 	MOCK_METHOD1(delay, void(uint8_t));
 	MOCK_METHOD1(analogRead, int(uint8_t));
 };
+using ArduinoMock = ::testing::StrictMock<NiceArduinoMock>;
 
 extern std::unique_ptr<ArduinoMock> arduinoMock;
 
