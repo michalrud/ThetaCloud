@@ -11,6 +11,8 @@ It consists of:
 * Extension modules that can be plugged into the main board with possibility of designing new ones,
 * Arduino library that can be used for designing actual systems using ThetaCloud, with example implementation basing on MQTT being provided.
 
+.. _installing:
+
 Basic Usage
 -----------
 
