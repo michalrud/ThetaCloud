@@ -25,3 +25,26 @@ ThetaCloudRelay
 
 			All other values are ignored.
 
+	.. cpp:member:: static const std::string RELAY1
+
+		Const value for which the service registers in
+		:cpp:class:`ThetaCloud`, that changes the state
+		of the first relay. Should be used as
+		:cpp:member:`SensorData::name`.
+
+	.. cpp:member:: static const std::string RELAY2
+
+		Const value for which the service registers in
+		:cpp:class:`ThetaCloud`, that changes the state
+		of the second relay. Should be used as
+		:cpp:member:`SensorData::name`.
+
+	.. cpp:member:: static const std::string ON
+
+		Const value which turns given relay on. Should be used as
+		:cpp:member:`SensorData::value`.
+
+	.. cpp:member:: static const std::string OFF
+
+		Const value which turns given relay off. Should be used as
+		:cpp:member:`SensorData::value`.

@@ -3,6 +3,11 @@
 
 #include "Arduino.h"
 
+const std::string ThetaCloudRelay::RELAY1 = "Relay1";
+const std::string ThetaCloudRelay::RELAY2 = "Relay2";
+const std::string ThetaCloudRelay::ON = "ON";
+const std::string ThetaCloudRelay::OFF = "OFF";
+
 ThetaCloudRelay::ThetaCloudRelay() :
 	enabled(false)
 {
@@ -26,11 +31,11 @@ void ThetaCloudRelay::init()
 	{
 		  pinMode(pin.second, OUTPUT);
 	}
-	switch1Token = thetaCloud.addWriteHandler("Relay1",
+	switch1Token = thetaCloud.addWriteHandler(RELAY1,
 		[this](const SensorData& data, const ThetaCloud::Emit& emit) {
 			trySetSwitch(Switch::one, data);
 	});
-	switch2Token = thetaCloud.addWriteHandler("Relay2",
+	switch2Token = thetaCloud.addWriteHandler(RELAY2,
 		[this](const SensorData& data, const ThetaCloud::Emit& emit) {
 			trySetSwitch(Switch::two, data);
 	});
@@ -38,9 +43,9 @@ void ThetaCloudRelay::init()
 
 void ThetaCloudRelay::trySetSwitch(Switch sw, const SensorData& data) const
 {
-	if (std::string("ON") == data.value)
+	if (ThetaCloudRelay::ON == data.value)
 		setSwitch(sw, true);
-	else if (std::string("OFF") == data.value)
+	else if (ThetaCloudRelay::OFF == data.value)
 		setSwitch(sw, false);
 	else
 	{
@@ -57,3 +62,4 @@ void ThetaCloudRelay::setSwitch(Switch whichOne, bool enabled) const
 }
 
 ThetaCloudRelay thetaCloudRelay;
+

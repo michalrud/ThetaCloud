@@ -10,6 +10,11 @@ class ThetaCloudRelay
 public:
 	ThetaCloudRelay();
 	void init();
+
+	static const std::string RELAY1;
+	static const std::string RELAY2;
+	static const std::string ON;
+	static const std::string OFF;
 protected:
 	bool enabled;
 	enum class Switch {one, two};
