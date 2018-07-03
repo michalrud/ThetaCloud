@@ -1,18 +1,15 @@
 ThetaCloudLight
 ===============
 
-Light sensor integrated in the main ThetaCloud board.
+.. cpp:class:: ThetaCloudLight
 
-Publishes
----------
+	Light sensor integrated in the main ThetaCloud board.
 
-:light:
-	Measured light value.
-	
-	:units:	``[Lux]``
-	:format: ``float``
+	:Publishes:
+		:light:
+			Measured light value.
 
-Consumes
---------
+			:units:	``[Lux]``
+			:format: ``float``
 
-This module does not consume any data.
+	:Consumes: This module does not consume any data.

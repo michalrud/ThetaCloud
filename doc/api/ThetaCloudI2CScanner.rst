@@ -1,18 +1,16 @@
 ThetaCloud I2C Scanner
 ======================
 
-Scans for all devices connected to the I2C bus on the main ThetaCloud board.
 
-Publishes
----------
+.. cpp:class:: ThetaCloudI2CScanner
 
-:i2c-devices:
-	Result of the I2C device scan.
+	Scans for all devices connected to the I2C bus on the main ThetaCloud board.
 
-	:format: List of hexadecimal address list delimeted by commas.
-		Example: ``0x12, 0x34``
+	:Publishes:
+		:i2c-devices:
+			Result of the I2C device scan.
 
-Consumes
---------
+			:format: List of hexadecimal address list delimeted by commas.
+				Example: ``0x12, 0x34``
 
-This module does not consume any data.
+	:Consumes: This module does not consume any data.

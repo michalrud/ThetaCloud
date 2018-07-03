@@ -24,7 +24,4 @@ in a loop for as long as the board is working.
 The only issue is that it doesn't really do anything at this point - so
 let's expand this program a bit :doc:`in the next section <02-enabling-modules>`.
 
-If you're curious, take a look at the API reference:
-
-* :cpp:func:`ThetaCloud::init()`
-* :cpp:func:`ThetaCloud::tick()`
+.. seealso:: See also: :cpp:func:`ThetaCloud::init()`, :cpp:func:`ThetaCloud::tick()`

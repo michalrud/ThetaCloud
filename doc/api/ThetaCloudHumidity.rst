@@ -1,23 +1,21 @@
 ThetaCloudHumidity
 ==================
 
-Humidity and temperature sensor integrated in main ThetaCloud board.
+.. cpp:class:: ThetaCloudHumidity
 
-Publishes
----------
+	Humidity and temperature sensor integrated in main ThetaCloud board.
 
-:humidity:
-	Measured humidity.
+	:Publishes:
 
-	:units:	``[%RH]``
-	:format: ``float``
-:temperature:
-	Measured temperature.
+		:humidity:
+			Measured humidity.
 
-	:units:	``[C]``
-	:format: ``float``
+			:units:	``[%RH]``
+			:format: ``float``
+		:temperature:
+			Measured temperature.
 
-Consumes
---------
+			:units:	``[C]``
+			:format: ``float``
 
-This module does not consume any data.
+	:Consumes: This module does not consume any data.
