@@ -11,8 +11,8 @@ public:
 	ThetaCloudRelay();
 	void init();
 
-	static const std::string RELAY1;
-	static const std::string RELAY2;
+	static const char* RELAY1;
+	static const char* RELAY2;
 	static const std::string ON;
 	static const std::string OFF;
 protected:

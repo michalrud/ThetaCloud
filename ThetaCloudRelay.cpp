@@ -3,8 +3,8 @@
 
 #include "Arduino.h"
 
-const std::string ThetaCloudRelay::RELAY1 = "Relay1";
-const std::string ThetaCloudRelay::RELAY2 = "Relay2";
+const char* ThetaCloudRelay::RELAY1 = "Relay1";
+const char* ThetaCloudRelay::RELAY2 = "Relay2";
 const std::string ThetaCloudRelay::ON = "ON";
 const std::string ThetaCloudRelay::OFF = "OFF";
 

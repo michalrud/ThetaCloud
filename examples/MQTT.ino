@@ -5,6 +5,8 @@
 #include <ThetaCloudRelay.h>
 #include <ThetaCloudHumidity.h>
 #include <ThetaCloudCO2.h>
+#include <ThetaCloudI2CScanner.h>
+#include <ThetaCloudPIR.h>
 
 const unsigned int THETA_CLOUT_TICK_DELAY_S = 5;
 const char SSID[] = "YOUR_SSID";
@@ -58,8 +60,8 @@ void setup()
   client.setServer(server, 1883);
   client.setCallback(handleMqttWrite);
   client.connect((deviceId + "esp").c_str());
-  client.subscribe("Relay1");
-  client.subscribe("Relay2");
+  client.subscribe(ThetaCloudRelay::RELAY1);
+  client.subscribe(ThetaCloudRelay::RELAY2);
   
   thetaCloud.whenDataAvailable(handleSensorData);
   thetaCloud.init();
@@ -67,6 +69,8 @@ void setup()
   thetaCloudRelay.init();
   thetaCloudHumidity.init();
   thetaCloudCO2.init();
+  thetaCloudI2CScanner.init();
+  thetaCloudPIR.init();
 }
 
 void loop()
