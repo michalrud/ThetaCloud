@@ -3,7 +3,7 @@ Handling data from sensors
 
 As a next step, let's print out to the serial console all the
 data from our sensors. To do so, we need to implement
-:term:`ThetaCloud::Emit` and call :term:`ThetaCloud::whenDataAvailable()`
+:cpp:type:`ThetaCloud::Emit` and call :cpp:func:`ThetaCloud::whenDataAvailable()`
 to register it:
 
 .. code-block:: cpp

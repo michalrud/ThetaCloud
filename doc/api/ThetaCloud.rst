@@ -1,14 +1,15 @@
 ThetaCloud
 ==========
 
-.. glossary::
+.. cpp:class:: ThetaCloud
 	
-	ThetaCloud::Emit
+	.. cpp:type:: std::function<void(const SensorData&)> Emit
+
 		Function definition for callback that will be called by ThetaCloud every time a new data is available from
 		devices. Can publish this data further or just print it using ``Serial``.
 
-		Needs to be registered using :term:`ThetaCloud::whenDataAvailable()`. Only one function can be registered like
-		that at one time - if :term:`ThetaCloud::whenDataAvailable()` is called again, previous function will be
+		Needs to be registered using :cpp:func:`ThetaCloud::whenDataAvailable()`. Only one function can be registered like
+		that at one time - if :cpp:func:`ThetaCloud::whenDataAvailable()` is called again, previous function will be
 		automatically unregistered.
 		
 		:Signature:
@@ -25,36 +26,38 @@ ThetaCloud
 					Serial.println(data.value);
 				}
 
-	ThetaCloud::DeviceReadHandler
-		Function definition for callback that will be called each time ThetaCloud requests new data to be read,
-		if available. Currently each registered handler will be called once when :term:`ThetaCloud::tick()` is called.
+	.. cpp:type:: std::function<void(const Emit&)> DeviceReadHandler
 
-		Handler doesn't have to do anything if no data is available, or it cannot be read for any reason.
+			Function definition for callback that will be called each time ThetaCloud requests new data to be read,
+			if available. Currently each registered handler will be called once when :cpp:func:`ThetaCloud::tick()` is called.
 
-		If data is available, callback provided in argument should be called with :term:`SensorData` containing the
-		data from sensor. Callback may be called multiple times, if multiple data is received (for example, sensor
-		provides both temperature and humidity information).
+			Handler doesn't have to do anything if no data is available, or it cannot be read for any reason.
 
-		Callback should not be stored for longer than the duration of handler execution.
+			If data is available, callback provided in argument should be called with :cpp:class:`SensorData` containing the
+			data from sensor. Callback may be called multiple times, if multiple data is received (for example, sensor
+			provides both temperature and humidity information).
 
-		:Signature:
-			.. code-block:: cpp
+			Callback should not be stored for longer than the duration of handler execution.
 
-				using DeviceReadHandler = std::function<void(const Emit&)>;
-		:Parameter Emit: Callback which should be used to provide data from sensor to the rest of the ThetaCloud.
-		:Example implementation:
-			.. code-block:: cpp
+			:Signature:
+				.. code-block:: cpp
 
-				void handler(const ThetaCloud::Emit& emit)
-				{
-					emit(SensorData{"MySensor", "My value"});
-				}
+					using DeviceReadHandler = std::function<void(const Emit&)>;
+			:Parameter Emit: Callback which should be used to provide data from sensor to the rest of the ThetaCloud.
+			:Example implementation:
+				.. code-block:: cpp
 
-	ThetaCloud::DeviceWriteHandler
+					void handler(const ThetaCloud::Emit& emit)
+					{
+						emit(SensorData{"MySensor", "My value"});
+					}
+
+	.. cpp:type:: std::function<void(const SensorData&, const Emit&)> DeviceWriteHandler
+
 		Function definition for callback that will be called, when a data is available for device to process.
-		Data can be made available using :term:`ThetaCloud::write()` method. Data read from devices by ThetaCloud
+		Data can be made available using :cpp:func:`ThetaCloud::write()` method. Data read from devices by ThetaCloud
 		is not automatically published here to prevent infinite loops, but if it's required it can be easily done
-		by calling :term:`ThetaCloud::write()` in implementation of :term:`ThetaCloud::Emit`.
+		by calling :cpp:func:`ThetaCloud::write()` in implementation of :cpp:type:`ThetaCloud::Emit`.
 
 		:Signature:
 			.. code-block:: cpp
@@ -73,7 +76,8 @@ ThetaCloud
 						emit(SensorData{"currentValue", sensor.value);
 				}
 
-	ThetaCloud::init()
+	.. cpp:function:: void init()
+
 		Initializes ThetaCloud. Usually should be called in the ``setup()`` function in the main file of Arduino's
 		sketch.
 
@@ -95,11 +99,12 @@ ThetaCloud
 					// initialization of other classes
 				}
 
-	ThetaCloud::whenDataAvailable()
-		Method for registering an :term:`ThetaCloud::Emit` callback to ThetaCloud.
+	.. cpp:function:: coid whenDataAvailable(const Emit& dataCallback)
+
+		Method for registering an :cpp:type:`ThetaCloud::Emit` callback to ThetaCloud.
 
 		In other words, the callback provided to this function will be called when a data from the device becomes
-		available and can be sent further. See :term:`ThetaCloud::Emit` description for more information.
+		available and can be sent further. See :cpp:type:`ThetaCloud::Emit` description for more information.
 
 		:Method signature:
 			.. code-block:: cpp
@@ -121,15 +126,16 @@ ThetaCloud
 					thetaCloud.whenDataAvailable(handleSensorData);
 				}
 
-	ThetaCloud::addReadHandler()
-		Method for registering an :term:`ThetaCloud::DeviceReadHandler` callback to ThetaCloud.
+	.. cpp:function:: DeviceHandlerTokenPtr addReadHandler(const DeviceReadHandler& handler)
 
-		In other words, callbacks provided using this method will be called when :term:`ThetaCloud::Tick()` is called
-		to check if new data can be read from the device. See :term:`ThetaCloud::DeviceReadHandler` description for
+		Method for registering an :cpp:type:`ThetaCloud::DeviceReadHandler` callback to ThetaCloud.
+
+		In other words, callbacks provided using this method will be called when :cpp:func:`ThetaCloud::Tick()` is called
+		to check if new data can be read from the device. See :cpp:type:`ThetaCloud::DeviceReadHandler` description for
 		more information.
 
 		.. note::
-			Deletion of a :term:`DeviceHandlerToken` returned by this function will result in immediate unregistration
+			Deletion of a :cpp:type:`DeviceHandlerToken` returned by this function will result in immediate unregistration
 			of the registered callback. Therefore, **the returned value needs to be kept somewhere**. **The following code
 			will not work** and the callback will *never be called*:
 
@@ -186,14 +192,15 @@ ThetaCloud
 					DeviceHandlerTokenPtr token;
 				};
 
-	ThetaCloud::addWriteHandler()
-		Method for registering an :term:`ThetaCloud::DeviceWriteHandler` callback to ThetaCloud.
+	.. cpp:function:: DeviceHandlerTokenPtr addWriteHandler(const std::string& topic, const DeviceWriteHandler& handler)
+
+		Method for registering an :cpp:type:`ThetaCloud::DeviceWriteHandler` callback to ThetaCloud.
 
 		In other words, callbacks provided using this method will be called when a data will be
 		available to the device for *consumption*.
 
 		For data to be consumed by the device, it needs to be provided to ThetaCloud using the
-		:term:`ThetaCloud::write()` method, and the ``name`` field of ``SensorData`` needs to be equal to the
+		:cpp:func:`ThetaCloud::write()` method, and the ``name`` field of ``SensorData`` needs to be equal to the
 		``topic`` argument passed during the registration.
 
 		.. note::
@@ -201,10 +208,10 @@ ThetaCloud
 			subscribed topic, the subscription will silently fail, and old subscription will still be in force.
 
 			To make a new subscription to an already used topic, the old subscription needs to be removed by deleting a
-			:term:`DeviceHandlerToken` received during subscription.
+			:cpp:type:`DeviceHandlerToken` received during subscription.
 
 		.. note::
-			Deletion of a :term:`DeviceHandlerToken` returned by this function will result in immediate unregistration
+			Deletion of a :cpp:type:`DeviceHandlerToken` returned by this function will result in immediate unregistration
 			of the registered callback. Therefore, **the returned value needs to be kept somewhere**. **The following code
 			will not work** and the callback will *never be called*:
 
@@ -228,7 +235,7 @@ ThetaCloud
 
 			See the code example later on to see a proper way to do it.
 		
-		See :term:`ThetaCloud::DeviceWriteHandler` description for more information.
+		See :cpp:type:`ThetaCloud::DeviceWriteHandler` description for more information.
 
 		:Method signature: 
 			.. code-block:: cpp
@@ -266,17 +273,18 @@ ThetaCloud
 					DeviceHandlerTokenPtr token;
 				};
 
-	ThetaCloud::write()
-		Method that can be used to publish data to modules registered using :term:`ThetaCloud::addWriteHandler()` so
+	.. cpp:function:: void write(const SensorData& data) const
+
+		Method that can be used to publish data to modules registered using :cpp:func:`ThetaCloud::addWriteHandler()` so
 		it can be *consumed*.
 
 		Only handler registered to consume ``topic`` that is equal to published ``SensorData.name`` will be called.
 
 		.. note::
-			Publishing data using this function **will not** send it to :term:`ThetaCloud::Emit` function registered
-			via :term:`ThetaCloud::whenDataAvailable()`.
+			Publishing data using this function **will not** send it to :cpp:type:`ThetaCloud::Emit` function registered
+			via :cpp:func:`ThetaCloud::whenDataAvailable()`.
 
-			Use :term:`ThetaCloud::emit()` to send data to currently registered :term:`ThetaCloud::Emit`.
+			Use :cpp:func:`ThetaCloud::emit()` to send data to currently registered :cpp:type:`ThetaCloud::Emit`.
 
 		:Method signature:
 			.. code-block:: cpp
@@ -287,14 +295,15 @@ ThetaCloud
 
 				thetaCloud.write(SensorData{"topic", "value"});
 
-	ThetaCloud::emit()
-		Method that calls the currently registered :term:`ThetaCloud::Emit` callback.
+	.. cpp:function:: void emit(const SensorData& data) const
+
+		Method that calls the currently registered :cpp:type:`ThetaCloud::Emit` callback.
 
 		.. note::
-			Publishing data using this function **will not** send it to any :term:`ThetaCloud::DeviceWriteHandler`
-			for consumption. The data will be sent directly to currently registered :term:`ThetaCloud::Emit`.
+			Publishing data using this function **will not** send it to any :cpp:type:`ThetaCloud::DeviceWriteHandler`
+			for consumption. The data will be sent directly to currently registered :cpp:type:`ThetaCloud::Emit`.
 
-			To send data to :term:`ThetaCloud::DeviceWriteHandler`, use :term:`ThetaCloud::write()`.
+			To send data to :cpp:type:`ThetaCloud::DeviceWriteHandler`, use :cpp:func:`ThetaCloud::write()`.
 
 		:Method signature:
 			.. code-block:: cpp
@@ -305,10 +314,11 @@ ThetaCloud
 
 				thetaCloud.emit(SensorData{"topic", "value"});
 
-	ThetaCloud::tick()
+	.. cpp:function:: void tick()
+
 		Method that should be called in the application's main loop (in case of Arduino, in the ``loop()`` function).
 
-		Currently calls all registered :term:`ThetaCloud::DeviceReadHandler` callbacks, but the exact functionality may be
+		Currently calls all registered :cpp:type:`ThetaCloud::DeviceReadHandler` callbacks, but the exact functionality may be
 		changed in the future.
 
 		:Method signature:
@@ -324,15 +334,17 @@ ThetaCloud
 					delay(5000);
 				}
 
-	DeviceHandlerToken
-		Token that ensures that given handler (either :term:`ThetaCloud::DeviceReadHandler` or :term:`ThetaCloud::DeviceWriteHandler`)
-		is registered to ThetaCloud. When destroyed, automatically unregisters a corresponding handler from ThetaCloud,
-		preventing calls to non-existing handlers, and - in effect - crashes.
+.. cpp:class:: DeviceHandlerToken
 
-		In practice - instance of this object (technically :term:`an unique pointer to it <DeviceHandlerTokenPtr>`) is
-		returned by :term:`ThetaCloud::addReadHandler()` and :term:`ThetaCloud::addWriteHandler()`. Keep this instance
-		for as long as your handler is valid and everything should be fine.
+	Token that ensures that given handler (either :cpp:type:`ThetaCloud::DeviceReadHandler` or :cpp:type:`ThetaCloud::DeviceWriteHandler`)
+	is registered to ThetaCloud. When destroyed, automatically unregisters a corresponding handler from ThetaCloud,
+	preventing calls to non-existing handlers, and - in effect - crashes.
 
-	DeviceHandlerTokenPtr
-		Unique pointer to :term:`DeviceHandlerToken`. Automatically destroys the pointee when it goes out of scope.
-		Alias for ``std::unique_ptr<DeviceHandlerToken>``.
+	In practice - instance of this object (technically :cpp:type:`an unique pointer to it <DeviceHandlerTokenPtr>`) is
+	returned by :cpp:func:`ThetaCloud::addReadHandler()` and :cpp:func:`ThetaCloud::addWriteHandler()`. Keep this instance
+	for as long as your handler is valid and everything should be fine.
+
+.. cpp:type:: std::unique_ptr<DeviceHandlerToken> DeviceHandlerTokenPtr
+
+	Unique pointer to :cpp:type:`DeviceHandlerToken`. Automatically destroys the pointee when it goes out of scope.
+	Alias for ``std::unique_ptr<DeviceHandlerToken>``.

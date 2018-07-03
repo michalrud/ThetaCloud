@@ -26,5 +26,5 @@ let's expand this program a bit :doc:`in the next section <02-enabling-modules>`
 
 If you're curious, take a look at the API reference:
 
-* :term:`ThetaCloud::init()`
-* :term:`ThetaCloud::tick()`
+* :cpp:func:`ThetaCloud::init()`
+* :cpp:func:`ThetaCloud::tick()`

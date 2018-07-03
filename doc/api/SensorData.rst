@@ -1,26 +1,29 @@
 SensorData
 ==========
 
-.. glossary::
-
-	SensorData
+.. cpp:class:: SensorData
+		
 		A simple structure that holds data either read from or provided to external devices.
 	
-	SensorData::name
+	.. cpp:member:: std::string SensorData::name
+
 		Name of the sensor which provided the data.
 
 		This should be the name of the sensor itself, board identification may be added later
 		during data publication.
 
-	SensorData::value
+	.. cpp:member:: std::string SensorData::value
+
 		Value read from the sensor. Format is not defined, so it depends on the implementation.
 		While simplicity should be preferred, there's nothing stopping given sensor handler to provide
 		a JSON or XML document.
 
-	const char* SensorData::getName()
-		Convenience method to get ``const char*`` of :term:`SensorData::name`.
+	.. cpp:function:: const char* SensorData::getName() const
+
+		Convenience method to get ``const char*`` of :cpp:member:`SensorData::name`.
 		Essentially calls ``name.c_str()``.
 
-	const char* SensorData::getValue()
-		Convenience method to get ``const char*`` of :term:`SensorData::value`.
+	.. cpp:function:: const char* SensorData::getValue() const
+
+		Convenience method to get ``const char*`` of :cpp:member:`SensorData::value`.
 		Essentially calls ``value.c_str()``.
