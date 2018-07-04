@@ -5,6 +5,7 @@ set(thetaCloudBaseSrc ThetaCloud.cpp)
 set(thetaCloudBaseMockSrc test/fakeIncludes/MockThetaCloud.cpp)
 include_directories(${CMAKE_CURRENT_LIST_DIR})
 
+enable_testing()
 find_package(Threads REQUIRED)
 include(ExternalProject)
 ExternalProject_Add(
@@ -39,35 +40,29 @@ set ( fakeCpps test/fakeIncludes/StaticStuff.cpp test/fakeIncludes/Arduino.cpp t
 set (theta_cloud_base_tests test/main.cpp test/theta_cloud_base_tests.cpp)
 add_executable(thetaCloudBaseTests ${theta_cloud_base_tests} ${thetaCloudBaseSrc} ${fakeCpps})
 target_link_libraries( thetaCloudBaseTests libgtest libgmock)
-add_custom_command(TARGET thetaCloudBaseTests POST_BUILD
-	COMMAND thetaCloudBaseTests --gtest_color=yes )
+add_test(NAME thetaCloudBase COMMAND thetaCloudBaseTests )
 
 set (i2c_helpers_tests test/main.cpp test/i2c_helpers_tests.cpp)
 add_executable(i2cHelpersTests ${i2c_helpers_tests} ${thetaCloudBaseSrc} ${fakeCpps})
 target_link_libraries( i2cHelpersTests libgtest libgmock)
-add_custom_command(TARGET i2cHelpersTests POST_BUILD
-    COMMAND i2cHelpersTests --gtest_color=yes )
+add_test(NAME i2cHelpers COMMAND i2cHelpersTests )
 
 set (light_tests test/main.cpp test/light_tests.cpp)
 add_executable(lightTests ${light_tests} ThetaCloudLight.cpp ${fakeCpps} ${thetaCloudBaseMockSrc})
 target_link_libraries( lightTests libgtest libgmock)
-add_custom_command(TARGET lightTests POST_BUILD
-    COMMAND lightTests --gtest_color=yes )
+add_test(NAME light COMMAND lightTests )
 
 set (humidity_tests test/main.cpp test/humidity_tests.cpp)
 add_executable(humidityTests ${humidity_tests} ThetaCloudHumidity.cpp ${fakeCpps} ${thetaCloudBaseMockSrc})
 target_link_libraries( humidityTests libgtest libgmock)
-add_custom_command(TARGET humidityTests POST_BUILD
-    COMMAND humidityTests --gtest_color=yes )
+add_test(NAME humidity COMMAND humidityTests )
 
 set (environment_tests test/main.cpp test/environment_tests.cpp)
 add_executable(envTests ${environment_tests} ThetaCloudEnvironment.cpp ${fakeCpps} ${thetaCloudBaseMockSrc})
 target_link_libraries( envTests libgtest libgmock)
-add_custom_command(TARGET envTests POST_BUILD
-    COMMAND envTests --gtest_color=yes )
+add_test(NAME env COMMAND envTests )
 
 set (pir_tests test/main.cpp test/pir_tests.cpp)
 add_executable(pirTests ${pir_tests} ThetaCloudPIR.cpp ${fakeCpps} ${thetaCloudBaseMockSrc})
 target_link_libraries( pirTests libgtest libgmock)
-add_custom_command(TARGET pirTests POST_BUILD
-    COMMAND pirTests --gtest_color=yes )
+add_test(NAME pir COMMAND pirTests )

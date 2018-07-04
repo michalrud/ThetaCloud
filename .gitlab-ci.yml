@@ -15,6 +15,7 @@ test:
     - cd build
     - cmake ..
     - make -j4
+    - make test
 
 doc:
   image: ubuntu:latest
