@@ -32,7 +32,7 @@ TEST_F(ThetaCloudHumidityTests, ReadingHumidity)
 	}));
 	tested.init();
 
-	EXPECT_EQ(handlers.size(), 2);
+	EXPECT_EQ(handlers.size(), 2u);
 
 	EXPECT_CALL((*Wire.mock), beginTransmission(SHT21_ADDRESS)).InSequence(s);
 	EXPECT_CALL((*Wire.mock), write(GET_HUMIDITY_CMD)).InSequence(s);
@@ -62,7 +62,7 @@ TEST_F(ThetaCloudHumidityTests, ReadingTemperature)
 	}));
 	tested.init();
 
-	EXPECT_EQ(handlers.size(), 2);
+	EXPECT_EQ(handlers.size(), 2u);
 
 	EXPECT_CALL((*Wire.mock), beginTransmission(SHT21_ADDRESS)).InSequence(s);
 	EXPECT_CALL((*Wire.mock), write(GET_TEMPERATURE_CMD)).InSequence(s);

@@ -34,35 +34,40 @@ set_target_properties(libgmock PROPERTIES
 include_directories("${source_dir}/googletest/include"
                     "${source_dir}/googlemock/include")
 
+set(CMAKE_CXX_FLAGS "-g -O0 -Wall -Werror -fprofile-arcs -ftest-coverage")
+set(CMAKE_C_FLAGS "-g -O0 -Wall -W -fprofile-arcs -ftest-coverage")
+set(CMAKE_EXE_LINKER_FLAGS "-fprofile-arcs -ftest-coverage")
+
 include_directories( test/fakeIncludes )
 set ( fakeCpps test/fakeIncludes/StaticStuff.cpp test/fakeIncludes/Arduino.cpp test/fakeIncludes/FakeUtils.cpp )
 
 set (theta_cloud_base_tests test/main.cpp test/theta_cloud_base_tests.cpp)
 add_executable(thetaCloudBaseTests ${theta_cloud_base_tests} ${thetaCloudBaseSrc} ${fakeCpps})
-target_link_libraries( thetaCloudBaseTests libgtest libgmock)
+target_link_libraries( thetaCloudBaseTests libgtest libgmock gcov )
 add_test(NAME thetaCloudBase COMMAND thetaCloudBaseTests )
 
 set (i2c_helpers_tests test/main.cpp test/i2c_helpers_tests.cpp)
 add_executable(i2cHelpersTests ${i2c_helpers_tests} ${thetaCloudBaseSrc} ${fakeCpps})
-target_link_libraries( i2cHelpersTests libgtest libgmock)
+target_link_libraries( i2cHelpersTests libgtest libgmock gcov )
 add_test(NAME i2cHelpers COMMAND i2cHelpersTests )
 
 set (light_tests test/main.cpp test/light_tests.cpp)
 add_executable(lightTests ${light_tests} ThetaCloudLight.cpp ${fakeCpps} ${thetaCloudBaseMockSrc})
-target_link_libraries( lightTests libgtest libgmock)
+target_link_libraries( lightTests libgtest libgmock gcov )
 add_test(NAME light COMMAND lightTests )
 
 set (humidity_tests test/main.cpp test/humidity_tests.cpp)
 add_executable(humidityTests ${humidity_tests} ThetaCloudHumidity.cpp ${fakeCpps} ${thetaCloudBaseMockSrc})
-target_link_libraries( humidityTests libgtest libgmock)
+target_link_libraries( humidityTests libgtest libgmock gcov )
 add_test(NAME humidity COMMAND humidityTests )
 
 set (environment_tests test/main.cpp test/environment_tests.cpp)
 add_executable(envTests ${environment_tests} ThetaCloudEnvironment.cpp ${fakeCpps} ${thetaCloudBaseMockSrc})
-target_link_libraries( envTests libgtest libgmock)
+target_link_libraries( envTests libgtest libgmock gcov )
 add_test(NAME env COMMAND envTests )
 
 set (pir_tests test/main.cpp test/pir_tests.cpp)
 add_executable(pirTests ${pir_tests} ThetaCloudPIR.cpp ${fakeCpps} ${thetaCloudBaseMockSrc})
-target_link_libraries( pirTests libgtest libgmock)
+target_link_libraries( pirTests libgtest libgmock gcov )
 add_test(NAME pir COMMAND pirTests )
+

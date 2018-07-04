@@ -5,24 +5,30 @@ stages:
 variables:
   DEBIAN_FRONTEND: "noninteractive"
 
+before_script:
+  - apt-get update -y
+  - apt-get install python3-pip make -y
+
 test:
   image: gcc:latest
   stage: test
   script:
-    - apt-get update -y
     - apt-get install cmake -y
+    - pip3 install gcovr
     - mkdir build
-    - cd build
+    - pushd build
     - cmake ..
     - make -j4
     - make test
+    - popd
+    - gcovr -s -r . --exclude "build/.*" --exclude "test/.*"
 
 doc:
   image: ubuntu:latest
   stage: doc
   script:
     - apt-get update -y
-    - apt-get install python3-sphinx python3-pip make -y
+    - apt-get install python3-sphinx -y
     - pip3 install sphinxcontrib-mermaid
     - sphinx-build -b html . ./_build
     - mv _build/ public/
