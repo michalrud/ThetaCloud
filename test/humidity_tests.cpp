@@ -21,27 +21,24 @@ struct ThetaCloudHumidityTests : public MockedThetaCloudTests
 	ThetaCloudHumidity tested;
 	MockCallback mockCallback;
 	::testing::Sequence s;
+	std::list<ThetaCloud::DeviceReadHandler> handlers;
+
+	ThetaCloudHumidityTests()
+	{
+		EXPECT_CALL((*mockThetaCloud), addReadHandler(_)).WillRepeatedly(::testing::Invoke([&](const ThetaCloud::DeviceReadHandler& h){
+			handlers.push_back(h);
+			return DeviceHandlerTokenPtr();
+		}));
+		tested.init();
+
+		EXPECT_EQ(handlers.size(), 2u);
+	}
 };
 
 TEST_F(ThetaCloudHumidityTests, ReadingHumidity)
 {
-	std::list<ThetaCloud::DeviceReadHandler> handlers;
-	EXPECT_CALL((*mockThetaCloud), addReadHandler(_)).WillRepeatedly(::testing::Invoke([&](const ThetaCloud::DeviceReadHandler& h){
-		handlers.push_back(h);
-		return DeviceHandlerTokenPtr();
-	}));
-	tested.init();
-
-	EXPECT_EQ(handlers.size(), 2u);
-
-	EXPECT_CALL((*Wire.mock), beginTransmission(SHT21_ADDRESS)).InSequence(s);
-	EXPECT_CALL((*Wire.mock), write(GET_HUMIDITY_CMD)).InSequence(s);
-	EXPECT_CALL((*Wire.mock), endTransmission()).InSequence(s);
-	EXPECT_CALL((*Wire.mock), requestFrom(SHT21_ADDRESS, 3)).InSequence(s);
-	EXPECT_CALL((*Wire.mock), available()).InSequence(s).WillOnce(Return(3));
-	EXPECT_CALL((*Wire.mock), read()).InSequence(s).WillOnce(Return(0xFF));
-	EXPECT_CALL((*Wire.mock), read()).InSequence(s).WillOnce(Return(0x0B));
-	EXPECT_CALL((*Wire.mock), read()).InSequence(s).WillOnce(Return(0x0C));
+	expectWriteTo((*Wire.mock), s, SHT21_ADDRESS, {GET_HUMIDITY_CMD});
+	expectReadFrom((*Wire.mock), s, SHT21_ADDRESS, {0xFF, 0x0B, 0x0C});
 	EXPECT_CALL((*arduinoMock), delay(100)).Times(1);
 	EXPECT_CALL(mockCallback, callback(::testing::_)).WillOnce(::testing::Invoke([](const SensorData& d){
 		float value = std::stof(d.value);
@@ -55,23 +52,8 @@ TEST_F(ThetaCloudHumidityTests, ReadingHumidity)
 
 TEST_F(ThetaCloudHumidityTests, ReadingTemperature)
 {
-	std::list<ThetaCloud::DeviceReadHandler> handlers;
-	EXPECT_CALL((*mockThetaCloud), addReadHandler(_)).WillRepeatedly(::testing::Invoke([&](const ThetaCloud::DeviceReadHandler& h){
-		handlers.push_back(h);
-		return DeviceHandlerTokenPtr();
-	}));
-	tested.init();
-
-	EXPECT_EQ(handlers.size(), 2u);
-
-	EXPECT_CALL((*Wire.mock), beginTransmission(SHT21_ADDRESS)).InSequence(s);
-	EXPECT_CALL((*Wire.mock), write(GET_TEMPERATURE_CMD)).InSequence(s);
-	EXPECT_CALL((*Wire.mock), endTransmission()).InSequence(s);
-	EXPECT_CALL((*Wire.mock), requestFrom(SHT21_ADDRESS, 3)).InSequence(s);
-	EXPECT_CALL((*Wire.mock), available()).InSequence(s).WillOnce(Return(3));
-	EXPECT_CALL((*Wire.mock), read()).InSequence(s).WillOnce(Return(0xFF));
-	EXPECT_CALL((*Wire.mock), read()).InSequence(s).WillOnce(Return(0x0B));
-	EXPECT_CALL((*Wire.mock), read()).InSequence(s).WillOnce(Return(0x0C));
+	expectWriteTo((*Wire.mock), s, SHT21_ADDRESS, {GET_TEMPERATURE_CMD});
+	expectReadFrom((*Wire.mock), s, SHT21_ADDRESS, {0xFF, 0x0B, 0x0C});
 	EXPECT_CALL((*arduinoMock), delay(100)).Times(1);
 	EXPECT_CALL(mockCallback, callback(::testing::_)).WillOnce(::testing::Invoke([](const SensorData& d){
 		float value = std::stof(d.value);

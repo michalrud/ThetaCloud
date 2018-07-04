@@ -22,38 +22,27 @@ struct ThetaCloudLightTests : public MockedThetaCloudTests
 {
 	ThetaCloudLight tested;
 	MockCallback mockCallback;
+	ThetaCloud::DeviceReadHandler readHandler;
 	::testing::Sequence s;
+
+	ThetaCloudLightTests()
+	{
+		expectWriteTo((*Wire.mock), s, ISL29023_ADDRESS, {COMMAND1_REGISTER, CONTINOUS_AMBIENT_LIGHT_MEAS});
+		expectWriteTo((*Wire.mock), s, ISL29023_ADDRESS, {COMMAND2_REGISTER, FULL_RANGE_64k_16BIT});
+		EXPECT_CALL((*mockThetaCloud), addReadHandler(_)).WillOnce(::testing::Invoke([&](const ThetaCloud::DeviceReadHandler& h){
+			readHandler = h;
+			return DeviceHandlerTokenPtr();
+		}));
+		tested.init();
+	}
 };
 
 TEST_F(ThetaCloudLightTests, ReadingLightSensor)
 {
-	ThetaCloud::DeviceReadHandler readHandler;
-	EXPECT_CALL((*Wire.mock), beginTransmission(ISL29023_ADDRESS)).InSequence(s);
-	EXPECT_CALL((*Wire.mock), write(COMMAND1_REGISTER)).InSequence(s);
-	EXPECT_CALL((*Wire.mock), write(CONTINOUS_AMBIENT_LIGHT_MEAS)).InSequence(s);
-	EXPECT_CALL((*Wire.mock), endTransmission()).InSequence(s);
-	EXPECT_CALL((*Wire.mock), beginTransmission(ISL29023_ADDRESS)).InSequence(s);
-	EXPECT_CALL((*Wire.mock), write(COMMAND2_REGISTER)).InSequence(s);
-	EXPECT_CALL((*Wire.mock), write(FULL_RANGE_64k_16BIT)).InSequence(s);
-	EXPECT_CALL((*Wire.mock), endTransmission()).InSequence(s);
-	EXPECT_CALL((*mockThetaCloud), addReadHandler(_)).WillOnce(::testing::Invoke([&](const ThetaCloud::DeviceReadHandler& h){
-		readHandler = h;
-		return DeviceHandlerTokenPtr();
-	}));
-	tested.init();
-
-	EXPECT_CALL((*Wire.mock), beginTransmission(ISL29023_ADDRESS)).InSequence(s);
-	EXPECT_CALL((*Wire.mock), write(DATAMSB_REGISTER)).InSequence(s);
-	EXPECT_CALL((*Wire.mock), endTransmission()).InSequence(s);
-	EXPECT_CALL((*Wire.mock), requestFrom(ISL29023_ADDRESS, 1)).InSequence(s);
-	EXPECT_CALL((*Wire.mock), available()).InSequence(s).WillOnce(Return(1));
-	EXPECT_CALL((*Wire.mock), read()).InSequence(s).WillOnce(Return(0x0A));
-	EXPECT_CALL((*Wire.mock), beginTransmission(ISL29023_ADDRESS)).InSequence(s);
-	EXPECT_CALL((*Wire.mock), write(DATALSB_REGISTER)).InSequence(s);
-	EXPECT_CALL((*Wire.mock), endTransmission()).InSequence(s);
-	EXPECT_CALL((*Wire.mock), requestFrom(ISL29023_ADDRESS, 1)).InSequence(s);
-	EXPECT_CALL((*Wire.mock), available()).InSequence(s).WillOnce(Return(1));
-	EXPECT_CALL((*Wire.mock), read()).InSequence(s).WillOnce(Return(0x0C));
+	expectWriteTo((*Wire.mock), s, ISL29023_ADDRESS, {DATAMSB_REGISTER});
+	expectReadFrom((*Wire.mock), s, ISL29023_ADDRESS, {0x0A});
+	expectWriteTo((*Wire.mock), s, ISL29023_ADDRESS, {DATALSB_REGISTER});
+	expectReadFrom((*Wire.mock), s, ISL29023_ADDRESS, {0x0C});
 
 	EXPECT_CALL(mockCallback, callback(_)).WillOnce(::testing::Invoke([](const SensorData& d){
 		float value = std::stof(d.value);

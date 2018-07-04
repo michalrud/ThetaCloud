@@ -45,17 +45,8 @@ TEST_F(ThetaCloudEnvironmentTests, ReadingCo2AndVoc)
 	}));
 	tested.init();
 
-	EXPECT_CALL((*Wire.mock), beginTransmission(MICS_VZ_89_ADDRESS)).InSequence(s);
-	EXPECT_CALL((*Wire.mock), write(GET_STATUS_COMMAND)).InSequence(s);
-	EXPECT_CALL((*Wire.mock), endTransmission()).InSequence(s);
-	EXPECT_CALL((*Wire.mock), requestFrom(MICS_VZ_89_ADDRESS, 6)).InSequence(s);
-	EXPECT_CALL((*Wire.mock), available()).InSequence(s).WillOnce(Return(6));
-	EXPECT_CALL((*Wire.mock), read()).InSequence(s).WillOnce(Return(0xFF));
-	EXPECT_CALL((*Wire.mock), read()).InSequence(s).WillOnce(Return(0x0B));
-	EXPECT_CALL((*Wire.mock), read()).InSequence(s).WillOnce(Return(0xFC));
-	EXPECT_CALL((*Wire.mock), read()).InSequence(s).WillOnce(Return(0xFD));
-	EXPECT_CALL((*Wire.mock), read()).InSequence(s).WillOnce(Return(0x0E));
-	EXPECT_CALL((*Wire.mock), read()).InSequence(s).WillOnce(Return(0x0F));
+	expectWriteTo((*Wire.mock), s, MICS_VZ_89_ADDRESS, {GET_STATUS_COMMAND});
+	expectReadFrom((*Wire.mock), s, MICS_VZ_89_ADDRESS, {0xFF, 0x0B, 0xFC, 0xFD, 0x0E, 0x0F});
 
 	EXPECT_CALL(mockCallback, callback(_)).WillRepeatedly(::testing::Invoke([&](const SensorData& d){
 		float value = std::stof(d.value);
