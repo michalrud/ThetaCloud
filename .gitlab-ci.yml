@@ -19,7 +19,7 @@ test:
     - pushd build
     - cmake ..
     - make -j4
-    - make test
+    - ctest --output-on-failure
     - popd
     - gcovr -s -r . --exclude "build/.*" --exclude "test/.*"
 
