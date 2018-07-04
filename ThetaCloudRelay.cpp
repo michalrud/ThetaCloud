@@ -8,8 +8,7 @@ const char* ThetaCloudRelay::RELAY2 = "Relay2";
 const std::string ThetaCloudRelay::ON = "ON";
 const std::string ThetaCloudRelay::OFF = "OFF";
 
-ThetaCloudRelay::ThetaCloudRelay() :
-	enabled(false)
+ThetaCloudRelay::ThetaCloudRelay()
 {
 }
 
@@ -17,13 +16,8 @@ void ThetaCloudRelay::init()
 {
 	// is this board connected?
 	auto adcValue = analogRead(A0);
-	if (adcValue > 250 && adcValue < 350)
+	if (adcValue < 250 || adcValue > 350)
 	{
-		enabled = true;
-	}
-	else
-	{
-		enabled = false;
 		return;
 	}
 	// actual initialization if board is detected

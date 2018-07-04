@@ -33,7 +33,6 @@ protected:
 		PirInfo(13, "PIR2")
 	} };
 	void handlePir(PirInfo& pir, const ThetaCloud::Emit& emit);
-	bool enabled;
 };
 
 extern ThetaCloudPIR thetaCloudPIR;

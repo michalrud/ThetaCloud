@@ -16,7 +16,6 @@ public:
 	static const std::string ON;
 	static const std::string OFF;
 protected:
-	bool enabled;
 	enum class Switch {one, two};
 	const std::map<Switch, int> SWITCH_GPIO = {
 		{Switch::one, 12},

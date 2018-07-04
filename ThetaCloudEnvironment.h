@@ -28,7 +28,6 @@ protected:
 		bool error;
 	};
 	static constexpr ThetaCloudEnvironment::AirSensorValue AIR_ERROR = {0, 0, true};
-	bool enabled;
 	static AirSensorValue GetAirReadings();
 #ifdef USE_MPL3115A2
 	struct BaroSensorValue

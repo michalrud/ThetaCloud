@@ -7,8 +7,7 @@
 const uint8_t MICS_VZ_89_ADDRESS = 0x70;
 const uint8_t GET_STATUS_COMMAND = 0b00001001;
 
-ThetaCloudEnvironment::ThetaCloudEnvironment() :
-	enabled(false)
+ThetaCloudEnvironment::ThetaCloudEnvironment()
 {
 }
 
@@ -16,13 +15,8 @@ void ThetaCloudEnvironment::init()
 {
 	// is this board connected?
 	auto adcValue = analogRead(A0);
-	if (adcValue > 150 && adcValue < 250)
+	if (adcValue < 150 || adcValue > 250)
 	{
-		enabled = true;
-	}
-	else
-	{
-		enabled = false;
 		return;
 	}
 #ifdef USE_MPL3115A2

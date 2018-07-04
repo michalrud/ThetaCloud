@@ -4,8 +4,7 @@
 const std::string ThetaCloudPIR::MOTION_DETECTED = "Motion detected!";
 const std::string ThetaCloudPIR::MOTION_LOST = "Motion lost.";
 
-ThetaCloudPIR::ThetaCloudPIR() :
-	enabled(false)
+ThetaCloudPIR::ThetaCloudPIR()
 {
 }
 
@@ -13,13 +12,8 @@ void ThetaCloudPIR::init()
 {
 	// is this board connected?
 	auto adcValue = analogRead(A0);
-	if (adcValue >= 50 && adcValue < 150)
+	if (adcValue < 50 || adcValue > 150)
 	{
-		enabled = true;
-	}
-	else
-	{
-		enabled = false;
 		return;
 	}
 	// actual initialization if board is detected
