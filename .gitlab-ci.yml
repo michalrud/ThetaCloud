@@ -23,11 +23,17 @@ test:
     - popd
     - gcovr -s -r . --exclude "build/.*" --exclude "test/.*"
 
+formatting:
+  image: ubuntu:latest
+  stage: test
+  script:
+    - apt-get install uncrustify -y
+    - find -regex '.*\.\(cpp\|h\|hpp\)' | uncrustify -F - -c formatting.cfg --check
+
 doc:
   image: ubuntu:latest
   stage: doc
   script:
-    - apt-get update -y
     - apt-get install python3-sphinx -y
     - pip3 install sphinxcontrib-mermaid
     - sphinx-build -b html . ./_build
