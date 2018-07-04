@@ -7,13 +7,12 @@ variables:
 
 before_script:
   - apt-get update -y
-  - apt-get install python3-pip make -y
 
 test:
   image: gcc:latest
   stage: test
   script:
-    - apt-get install cmake -y
+    - apt-get install python3-pip cmake -y
     - pip3 install gcovr
     - mkdir build
     - pushd build
@@ -34,7 +33,7 @@ doc:
   image: ubuntu:latest
   stage: doc
   script:
-    - apt-get install python3-sphinx -y
+    - apt-get install python3-pip make python3-sphinx -y
     - pip3 install sphinxcontrib-mermaid
     - sphinx-build -b html . ./_build
     - mv _build/ public/
