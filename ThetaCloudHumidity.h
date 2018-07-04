@@ -8,23 +8,23 @@
 class ThetaCloudHumidity
 {
 public:
-	ThetaCloudHumidity();
-	void init();
+    ThetaCloudHumidity();
+    void init();
 protected:
-	struct SensorGetValue
-	{
-		uint16_t value;
-		bool error;
-	};
-	static constexpr SensorGetValue ERROR = {0, true};
+    struct SensorGetValue
+    {
+        uint16_t value;
+        bool error;
+    };
+    static constexpr SensorGetValue ERROR = {0, true};
 
-	static float GetHumidity();
-	static float GetTemperature();
+    static float GetHumidity();
+    static float GetTemperature();
 
-	static SensorGetValue GetValue(uint8_t command);
+    static SensorGetValue GetValue(uint8_t command);
 
-	DeviceHandlerTokenPtr humidityToken;
-	DeviceHandlerTokenPtr temperatureToken;
+    DeviceHandlerTokenPtr humidityToken;
+    DeviceHandlerTokenPtr temperatureToken;
 };
 
 extern ThetaCloudHumidity thetaCloudHumidity;

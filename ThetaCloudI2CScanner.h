@@ -7,12 +7,12 @@
 class ThetaCloudI2CScanner
 {
 public:
-	ThetaCloudI2CScanner();
-	void init();
+    ThetaCloudI2CScanner();
+    void init();
 private:
-	std::string scan();
+    std::string scan();
 
-	DeviceHandlerTokenPtr token;
+    DeviceHandlerTokenPtr token;
 };
 
 extern ThetaCloudI2CScanner thetaCloudI2CScanner;

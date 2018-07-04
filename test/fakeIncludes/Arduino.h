@@ -7,11 +7,11 @@ const uint8_t A0 = 0x76;
 
 struct NiceArduinoMock
 {
-	MOCK_METHOD1(delay, void(uint8_t));
-	MOCK_METHOD1(analogRead, int(uint8_t));
-	MOCK_METHOD1(digitalRead, int(uint8_t));
-	MOCK_METHOD2(pinMode, void(uint8_t, int));
-	MOCK_METHOD2(digitalWrite, void(uint8_t, uint8_t));
+    MOCK_METHOD1(delay, void(uint8_t));
+    MOCK_METHOD1(analogRead, int(uint8_t));
+    MOCK_METHOD1(digitalRead, int(uint8_t));
+    MOCK_METHOD2(pinMode, void(uint8_t, int));
+    MOCK_METHOD2(digitalWrite, void(uint8_t, uint8_t));
 };
 using ArduinoMock = ::testing::StrictMock<NiceArduinoMock>;
 

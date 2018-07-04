@@ -6,16 +6,23 @@
 
 class ThetaCloud;
 
-class DeviceHandlerToken {
-	DeviceHandlerToken() = delete;
+class DeviceHandlerToken
+{
+    DeviceHandlerToken() = delete;
 public:
-	~DeviceHandlerToken() { deleter(); }
+    ~DeviceHandlerToken()
+    {
+        deleter();
+    }
+
 protected:
-	DeviceHandlerToken(const std::function<void()>& deleter) :
-		deleter(deleter)
-	{}
-	const std::function<void()> deleter;
-	friend ThetaCloud;
+    DeviceHandlerToken(const std::function<void()> &deleter) :
+        deleter(deleter)
+    {
+    }
+
+    const std::function<void()> deleter;
+    friend ThetaCloud;
 };
 
 using DeviceHandlerTokenPtr = std::unique_ptr<DeviceHandlerToken>;

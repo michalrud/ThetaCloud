@@ -18,31 +18,31 @@
 class ThetaCloudEnvironment
 {
 public:
-	ThetaCloudEnvironment();
-	void init();
+    ThetaCloudEnvironment();
+    void init();
 protected:
-	struct AirSensorValue
-	{
-		float co2Value;
-		float vocValue;
-		bool error;
-	};
-	static constexpr ThetaCloudEnvironment::AirSensorValue AIR_ERROR = {0, 0, true};
-	static AirSensorValue GetAirReadings();
+    struct AirSensorValue
+    {
+        float co2Value;
+        float vocValue;
+        bool error;
+    };
+    static constexpr ThetaCloudEnvironment::AirSensorValue AIR_ERROR = {0, 0, true};
+    static AirSensorValue GetAirReadings();
 #ifdef USE_MPL3115A2
-	struct BaroSensorValue
-	{
-		float pressure;
-		float altitude;
-		float temperature;
-		bool error;
-	};
-	static constexpr ThetaCloudEnvironment::BaroSensorValue BARO_ERROR = {0, 0, 0, true};
-	BaroSensorValue GetBaroReadings();
-	Adafruit_MPL3115A2 baroSensor;
+    struct BaroSensorValue
+    {
+        float pressure;
+        float altitude;
+        float temperature;
+        bool error;
+    };
+    static constexpr ThetaCloudEnvironment::BaroSensorValue BARO_ERROR = {0, 0, 0, true};
+    BaroSensorValue GetBaroReadings();
+    Adafruit_MPL3115A2 baroSensor;
 #endif
 
-	DeviceHandlerTokenPtr co2Token;
+    DeviceHandlerTokenPtr co2Token;
 };
 
 extern ThetaCloudEnvironment thetaCloudEnvironment;

@@ -8,12 +8,12 @@
 class ThetaCloudLight
 {
 public:
-	ThetaCloudLight();
-	void init();
+    ThetaCloudLight();
+    void init();
 private:
-	float read();
+    float read();
 
-	DeviceHandlerTokenPtr lightToken;
+    DeviceHandlerTokenPtr lightToken;
 };
 
 extern ThetaCloudLight thetaCloudLight;
