@@ -19,3 +19,8 @@ void pinMode(uint8_t pin, int pinMode)
 {
 	arduinoMock->pinMode(pin, pinMode);
 }
+
+void digitalWrite(uint8_t pin, uint8_t value)
+{
+	arduinoMock->digitalWrite(pin, value);
+}

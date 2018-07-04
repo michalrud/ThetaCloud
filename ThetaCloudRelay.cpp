@@ -41,13 +41,6 @@ void ThetaCloudRelay::trySetSwitch(Switch sw, const SensorData& data) const
 		setSwitch(sw, true);
 	else if (ThetaCloudRelay::OFF == data.value)
 		setSwitch(sw, false);
-	else
-	{
-		Serial.print("ThetaCloudRelay: Error: ");
-		Serial.print(data.getName());
-		Serial.print(" got unknown command: ");
-		Serial.println(data.getValue());
-	}
 }
 
 void ThetaCloudRelay::setSwitch(Switch whichOne, bool enabled) const

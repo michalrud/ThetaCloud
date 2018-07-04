@@ -71,3 +71,7 @@ add_executable(pirTests ${pir_tests} ThetaCloudPIR.cpp ${fakeCpps} ${thetaCloudB
 target_link_libraries( pirTests libgtest libgmock gcov )
 add_test(NAME pir COMMAND pirTests )
 
+set (relay_tests test/main.cpp test/relay_tests.cpp)
+add_executable(relayTests ${relay_tests} ThetaCloudRelay.cpp ${fakeCpps} ${thetaCloudBaseMockSrc})
+target_link_libraries( relayTests libgtest libgmock gcov )
+add_test(NAME relay COMMAND relayTests )
