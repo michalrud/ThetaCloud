@@ -16,13 +16,7 @@ I2CHelpers
 
 	:Usage example: Simple write:
 
-		.. mermaid::
-
-			sequenceDiagram
-				ThetaCloud->>I2CDevice(0x67): beginTransmission
-				ThetaCloud->>I2CDevice(0x67): send 0x12
-				ThetaCloud->>I2CDevice(0x67): send 0x34
-				ThetaCloud->>I2CDevice(0x67): endTransmission
+		.. literalinclude:: /doc/uml/simplewrite.utxt
 
 		.. code-block:: cpp
 
@@ -32,15 +26,7 @@ I2CHelpers
 
 	:Usage example: Write with delayed ``endTransmission()``:
 
-		.. mermaid::
-
-			sequenceDiagram
-				ThetaCloud->>I2CDevice(0x67): beginTransmission
-				ThetaCloud->>I2CDevice(0x67): send 0x12
-				ThetaCloud->>ThetaCloud: wait for 10ms
-				ThetaCloud->>I2CDevice(0x67): send 0x34
-				ThetaCloud->>ThetaCloud: wait for 20ms
-				ThetaCloud->>I2CDevice(0x67): endTransmission
+		.. literalinclude:: /doc/uml/delayedwrite.utxt
 
 		.. code-block:: cpp
 

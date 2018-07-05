@@ -33,8 +33,7 @@ doc:
   image: ubuntu:latest
   stage: doc
   script:
-    - apt-get install python3-pip make python3-sphinx -y
-    - pip3 install sphinxcontrib-mermaid
+    - apt-get install python3-sphinx make -y
     - sphinx-build -b html . ./_build
     - mv _build/ public/
   artifacts:

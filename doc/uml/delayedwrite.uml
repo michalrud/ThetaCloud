@@ -1,0 +1,11 @@
+@startuml
+participant ThetaCloud
+participant I2CDevice as "I2CDevice(0x67)"
+
+ThetaCloud -> I2CDevice: beginTransmission
+ThetaCloud -> ThetaCloud: wait for 10ms
+ThetaCloud -> I2CDevice: send(0x12)
+ThetaCloud -> ThetaCloud: wait for 20ms
+ThetaCloud -> I2CDevice: send(0x34)
+ThetaCloud -> I2CDevice: endTransmission
+@enduml
