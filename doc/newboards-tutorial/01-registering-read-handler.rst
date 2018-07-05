@@ -78,7 +78,12 @@ data further (for where it goes see: :doc:`/doc/library-tutorial/03-sensor-data-
 Calling this function with a :cpp:class:`SensorData` structure publishes the data.
 
 And so, in the 8th line we are publishing the data named ``Example`` with the value
-of ``Heartbeat``.
+of ``Heartbeat``. Remember - calling ``emit()`` is *entirely optional*. If your module
+doesn't have anything to publish - handler function can return without calling
+``emit()`` at all.
+
+Also, if your function has more than one piece of data to publish, ``emit()`` can
+be called multiple times.
 
 .. note:: It's possible that the ``emit`` function will be changed during the lifetime
 	of an application. Therefore, if you want your module to emit data even when
