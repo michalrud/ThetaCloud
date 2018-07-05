@@ -18,6 +18,8 @@ Let's write an application, that will toggle the
 :doc:`relays </doc/api/ThetaCloudRelay>` every 5 seconds:
 
 .. code-block:: cpp
+	:linenos:
+	:emphasize-lines: 8,31-38
 	
 	#include <ThetaCloud.h>
 	#include <ThetaCloudLight.h>

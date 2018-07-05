@@ -6,6 +6,8 @@ with hardware, either integrated with the base board or connected as an addition
 the base board by default:
 
 .. code-block:: cpp
+	:linenos:
+	:emphasize-lines: 2,7
 	
 	#include <ThetaCloud.h>
 	#include <ThetaCloudLight.h>
@@ -31,6 +33,8 @@ That's all what's needed - one ``#include`` and one call to the ``init()`` metho
 Since it's that easy, let's enable all provided modules:
 
 .. code-block:: cpp
+	:linenos:
+	:emphasize-lines: 3,4,5,6,12,13,14,15
 	
 	#include <ThetaCloud.h>
 	#include <ThetaCloudLight.h>

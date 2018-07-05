@@ -7,6 +7,8 @@ data from our sensors. To do so, we need to implement
 to register it:
 
 .. code-block:: cpp
+	:linenos:
+	:emphasize-lines: 8-13,17
 	
 	#include <ThetaCloud.h>
 	#include <ThetaCloudLight.h>

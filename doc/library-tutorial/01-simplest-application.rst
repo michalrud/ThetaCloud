@@ -5,6 +5,7 @@ A simplest application that starts up the ThetaCloud infrastructure can be
 written like this:
 
 .. code-block:: cpp
+	:linenos:
 	
 	#include <ThetaCloud.h>
 
