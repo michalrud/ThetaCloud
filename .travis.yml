@@ -9,6 +9,7 @@ addons:
     packages:
       - cmake
       - gcovr
+      - valgrind
 before_script:
   - gcov --version
   - g++ --version
