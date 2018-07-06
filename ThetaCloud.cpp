@@ -3,8 +3,8 @@
 #include "Wire.h"
 #include <cassert>
 
-const int TC_I2C_SDA = 2;
-const int TC_I2C_SCL = 14;
+constexpr int TC_I2C_SDA = 2;
+constexpr int TC_I2C_SCL = 14;
 
 void ThetaCloud::init()
 {

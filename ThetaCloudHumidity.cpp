@@ -6,14 +6,14 @@
 #include "I2CHelpers.h"
 #include "Utils.h"
 
-const uint8_t SHT21_ADDRESS = 0x40;
+constexpr uint8_t SHT21_ADDRESS = 0x40;
 
-const uint8_t GET_TEMPERATURE_CMD = 0xF3;
-const uint8_t GET_HUMIDITY_CMD = 0xF5;
 
 ThetaCloudHumidity::ThetaCloudHumidity()
 {
 }
+constexpr uint8_t GET_TEMPERATURE_CMD = 0xF3;
+constexpr uint8_t GET_HUMIDITY_CMD = 0xF5;
 
 void ThetaCloudHumidity::init()
 {

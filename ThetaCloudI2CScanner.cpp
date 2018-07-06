@@ -5,12 +5,12 @@
 #include <Wire.h>
 #include "Utils.h"
 
-const uint8_t MIN_ADDRESS = 0x01;
-const uint8_t MAX_ADDRESS = 0x7F;
 
 ThetaCloudI2CScanner::ThetaCloudI2CScanner()
 {
 }
+constexpr uint8_t MIN_ADDRESS = 0x01;
+constexpr uint8_t MAX_ADDRESS = 0x7F;
 
 void ThetaCloudI2CScanner::init()
 {

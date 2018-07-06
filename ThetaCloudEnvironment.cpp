@@ -4,12 +4,12 @@
 #include "I2CHelpers.h"
 #include "Utils.h"
 
-const uint8_t MICS_VZ_89_ADDRESS = 0x70;
-const uint8_t GET_STATUS_COMMAND = 0b00001001;
 
 ThetaCloudEnvironment::ThetaCloudEnvironment()
 {
 }
+constexpr uint8_t MICS_VZ_89_ADDRESS = 0x70;
+constexpr uint8_t GET_STATUS_COMMAND = 0b00001001;
 
 void ThetaCloudEnvironment::init()
 {
