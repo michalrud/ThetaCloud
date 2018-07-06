@@ -86,10 +86,6 @@ ThetaCloud
 			basic libraries (at the moment just the ``Wire`` library) and any initializing actions performed by
 			modules may fail without that.
 
-		:Method signature:
-			.. code-block:: cpp
-
-				void ThetaCloud::init()
 		:Example:
 			.. code-block:: cpp
 
@@ -106,10 +102,6 @@ ThetaCloud
 		In other words, the callback provided to this function will be called when a data from the device becomes
 		available and can be sent further. See :cpp:type:`ThetaCloud::Emit` description for more information.
 
-		:Method signature:
-			.. code-block:: cpp
-
-				void ThetaCloud::whenDataAvailable(const Emit& dataCallback)
 		:Example:
 			.. code-block:: cpp
 
@@ -159,10 +151,6 @@ ThetaCloud
 
 			See the code example later on to see a proper way to do it.
 
-		:Method signature:
-			.. code-block:: cpp
-
-				DeviceHandlerTokenPtr ThetaCloud::addReadHandler(const DeviceReadHandler& handler)
 		:Example: Warning - after `token` goes out of scope handler will be automatically unregistered.
 
 			.. code-block:: cpp
@@ -237,11 +225,6 @@ ThetaCloud
 		
 		See :cpp:type:`ThetaCloud::DeviceWriteHandler` description for more information.
 
-		:Method signature: 
-			.. code-block:: cpp
-
-				DeviceHandlerTokenPtr ThetaCloud::addWriteHandler(const std::string& topic,
-					const DeviceWriteHandler& handler)
 		:Example: Warning - after `token` goes out of scope, the handler will be automatically unregistered.
 
 			.. code-block:: cpp
@@ -286,10 +269,6 @@ ThetaCloud
 
 			Use :cpp:func:`ThetaCloud::emit()` to send data to currently registered :cpp:type:`ThetaCloud::Emit`.
 
-		:Method signature:
-			.. code-block:: cpp
-
-				void ThetaCloud::write(const SensorData& data) const
 		:Example:
 			.. code-block:: cpp
 
@@ -305,10 +284,6 @@ ThetaCloud
 
 			To send data to :cpp:type:`ThetaCloud::DeviceWriteHandler`, use :cpp:func:`ThetaCloud::write()`.
 
-		:Method signature:
-			.. code-block:: cpp
-
-				void ThetaCloud::emit(const SensorData& data) const
 		:Example:
 			.. code-block:: cpp
 
@@ -321,10 +296,6 @@ ThetaCloud
 		Currently calls all registered :cpp:type:`ThetaCloud::DeviceReadHandler` callbacks, but the exact functionality may be
 		changed in the future.
 
-		:Method signature:
-			.. code-block:: cpp
-
-				void ThetaCloud::tick()
 		:Example:
 			.. code-block:: cpp
 
