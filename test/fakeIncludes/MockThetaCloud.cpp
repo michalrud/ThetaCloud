@@ -7,9 +7,9 @@ void ThetaCloud::init()
     mockThetaCloud->init();
 }
 
-void ThetaCloud::whenDataAvailable(const std::function<void(const SensorData &)> &dataCallback)
+void ThetaCloud::whenDataAvailable(const std::function<void(const SensorData &)> &dataCallback_)
 {
-    mockThetaCloud->whenDataAvailable(dataCallback);
+    mockThetaCloud->whenDataAvailable(dataCallback_);
 }
 
 DeviceHandlerTokenPtr ThetaCloud::addReadHandler(const DeviceReadHandler &handler)

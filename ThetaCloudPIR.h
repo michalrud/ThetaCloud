@@ -16,9 +16,9 @@ public:
 protected:
     struct PirInfo
     {
-        PirInfo(const uint8_t pin, const std::string &name) :
-            pin(pin),
-            name(name),
+        PirInfo(const uint8_t pin_, const std::string &name_) :
+            pin(pin_),
+            name(name_),
             lastState(false)
         {
         }

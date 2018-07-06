@@ -51,8 +51,8 @@ void expectWriteTo(WireMock &wireMock, ::testing::Sequence &s, uint8_t address,
 void expectReadFrom(WireMock &wireMock, ::testing::Sequence &s, uint8_t address,
                     std::vector<uint8_t> data)
 {
-    EXPECT_CALL((*Wire.mock), requestFrom(address, data.size())).InSequence(s);
-    EXPECT_CALL((*Wire.mock), available()).InSequence(s).WillOnce(::testing::Return(data.size()));
+    EXPECT_CALL(wireMock, requestFrom(address, data.size())).InSequence(s);
+    EXPECT_CALL(wireMock, available()).InSequence(s).WillOnce(::testing::Return(data.size()));
     for (const auto &byte : data)
-        EXPECT_CALL((*Wire.mock), read()).InSequence(s).WillOnce(::testing::Return(byte));
+        EXPECT_CALL(wireMock, read()).InSequence(s).WillOnce(::testing::Return(byte));
 }

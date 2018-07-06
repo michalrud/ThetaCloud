@@ -16,8 +16,8 @@ public:
     }
 
 protected:
-    DeviceHandlerToken(const std::function<void()> &deleter) :
-        deleter(deleter)
+    DeviceHandlerToken(const std::function<void()> &deleter_) :
+        deleter(deleter_)
     {
     }
 

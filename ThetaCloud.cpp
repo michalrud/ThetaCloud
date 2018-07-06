@@ -13,9 +13,9 @@ void ThetaCloud::init()
     initialized = true;
 }
 
-void ThetaCloud::whenDataAvailable(const std::function<void(const SensorData &)> &dataCallback)
+void ThetaCloud::whenDataAvailable(const std::function<void(const SensorData &)> &dataCallback_)
 {
-    this->dataCallback = dataCallback;
+    this->dataCallback = dataCallback_;
 }
 
 DeviceHandlerTokenPtr ThetaCloud::addReadHandler(const DeviceReadHandler &handler)

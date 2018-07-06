@@ -62,7 +62,7 @@ float ThetaCloudLight::read()
     uint16_t light = dataMsb.first[0] << 8;
     light += dataLsb.first[0];
 
-    return ((float)light) * getLuxMultiplier(USED_RESOLUTION, USED_RANGE);
+    return float(light) * getLuxMultiplier(USED_RESOLUTION, USED_RANGE);
 }
 
 ThetaCloudLight thetaCloudLight;

@@ -95,7 +95,7 @@ TEST_F(ThetaCloudFixture, ServicesCanUnsubscribeByDeletingToken) {
     EXPECT_CALL((*Wire.mock), begin(2, 14)).Times(1);
     testedThetaCloud.init();
     MockReadHandler mockReadHandlerAlwaysCalled;
-    auto token2 = testedThetaCloud.addReadHandler(
+    auto token1 = testedThetaCloud.addReadHandler(
         [&](const ThetaCloud::Emit &emit) {
         mockReadHandlerAlwaysCalled.readHandler(emit);
     });

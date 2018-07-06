@@ -25,7 +25,7 @@ public:
     }
 
     void init();
-    void whenDataAvailable(const Emit &dataCallback);
+    void whenDataAvailable(const Emit &dataCallback_);
     DeviceHandlerTokenPtr addReadHandler(const DeviceReadHandler &handler);
     DeviceHandlerTokenPtr addWriteHandler(const std::string &topic,
                                           const DeviceWriteHandler &handler);
