@@ -34,7 +34,7 @@ set_target_properties(libgmock PROPERTIES
 include_directories("${source_dir}/googletest/include"
                     "${source_dir}/googlemock/include")
 
-set(ANNOYING_FLAGS "-Wall -Wextra -Wshadow -Wnon-virtual-dtor -Wold-style-cast -Wcast-align -Wmisleading-indentation -Wduplicated-cond -Wduplicated-branches -Wlogical-op -Werror")
+set(ANNOYING_FLAGS "-Wall -Wextra -Wshadow -Wnon-virtual-dtor -Wold-style-cast -Wcast-align -Wlogical-op -Werror")
 set(COVERAGE_FLAGS "-fprofile-arcs -ftest-coverage")
 set(CMAKE_CXX_FLAGS "-g -O0 ${ANNOYING_FLAGS} ${COVERAGE_FLAGS}")
 set(CMAKE_C_FLAGS "-g -O0 ${ANNOYING_FLAGS} -W ${COVERAGE_FLAGS}")
