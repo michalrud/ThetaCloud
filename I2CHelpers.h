@@ -6,7 +6,7 @@
 #include <array>
 #include <utility>
 
-const unsigned int READ_RETRIES = 10;
+constexpr unsigned int READ_RETRIES = 10;
 
 class WriteToI2C
 {

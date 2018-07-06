@@ -18,7 +18,7 @@ script:
   - cd $PARENTDIR/build
   - cmake -Dcoverage=ON -DCMAKE_CXX_COMPILER=$COMPILER $PARENTDIR
   - make
-  - ctest
+  - ctest --output-on-failure
 after_success:
   - cd $PARENTDIR
   - gcovr -r . --exclude 'build/.*' --exclude "test/.*"
