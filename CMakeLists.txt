@@ -34,9 +34,11 @@ set_target_properties(libgmock PROPERTIES
 include_directories("${source_dir}/googletest/include"
                     "${source_dir}/googlemock/include")
 
-set(CMAKE_CXX_FLAGS "-g -O0 -Wall -Werror -fprofile-arcs -ftest-coverage")
-set(CMAKE_C_FLAGS "-g -O0 -Wall -W -fprofile-arcs -ftest-coverage")
-set(CMAKE_EXE_LINKER_FLAGS "-fprofile-arcs -ftest-coverage")
+set(ANNOYING_FLAGS "-Wall -Wextra -Wshadow -Wnon-virtual-dtor -Wold-style-cast -Wcast-align -Wmisleading-indentation -Wduplicated-cond -Wduplicated-branches -Wlogical-op -Werror")
+set(COVERAGE_FLAGS "-fprofile-arcs -ftest-coverage")
+set(CMAKE_CXX_FLAGS "-g -O0 ${ANNOYING_FLAGS} ${COVERAGE_FLAGS}")
+set(CMAKE_C_FLAGS "-g -O0 ${ANNOYING_FLAGS} -W ${COVERAGE_FLAGS}")
+set(CMAKE_EXE_LINKER_FLAGS "${COVERAGE_FLAGS}")
 
 include_directories( test/fakeIncludes )
 set ( fakeCpps test/fakeIncludes/StaticStuff.cpp test/fakeIncludes/Arduino.cpp test/fakeIncludes/FakeUtils.cpp )
