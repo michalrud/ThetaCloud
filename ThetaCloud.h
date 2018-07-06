@@ -20,9 +20,6 @@ public:
         initialized(false)
     {
     }
-    ~ThetaCloud()
-    {
-    }
 
     void init();
     void whenDataAvailable(const Emit &dataCallback_);

@@ -8,7 +8,6 @@
 class ThetaCloudHumidity
 {
 public:
-    ThetaCloudHumidity();
     void init();
 protected:
     struct SensorGetValue

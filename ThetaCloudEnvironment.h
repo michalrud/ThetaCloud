@@ -18,7 +18,6 @@
 class ThetaCloudEnvironment
 {
 public:
-    ThetaCloudEnvironment();
     void init();
 protected:
     struct AirSensorValue

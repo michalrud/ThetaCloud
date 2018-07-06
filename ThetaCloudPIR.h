@@ -9,7 +9,6 @@
 class ThetaCloudPIR
 {
 public:
-    ThetaCloudPIR();
     void init();
     static const std::string MOTION_DETECTED;
     static const std::string MOTION_LOST;

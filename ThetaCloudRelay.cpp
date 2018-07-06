@@ -8,10 +8,6 @@ const char *ThetaCloudRelay::RELAY2 = "Relay2";
 const std::string ThetaCloudRelay::ON = "ON";
 const std::string ThetaCloudRelay::OFF = "OFF";
 
-ThetaCloudRelay::ThetaCloudRelay()
-{
-}
-
 void ThetaCloudRelay::init()
 {
     // is this board connected?

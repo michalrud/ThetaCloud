@@ -8,7 +8,6 @@
 class ThetaCloudRelay
 {
 public:
-    ThetaCloudRelay();
     void init();
 
     static const char *RELAY1;

@@ -8,7 +8,6 @@
 class ThetaCloudLight
 {
 public:
-    ThetaCloudLight();
     void init();
 private:
     float read();

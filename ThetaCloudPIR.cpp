@@ -4,10 +4,6 @@
 const std::string ThetaCloudPIR::MOTION_DETECTED = "Motion detected!";
 const std::string ThetaCloudPIR::MOTION_LOST = "Motion lost.";
 
-ThetaCloudPIR::ThetaCloudPIR()
-{
-}
-
 void ThetaCloudPIR::init()
 {
     // is this board connected?

@@ -8,10 +8,6 @@
 
 constexpr uint8_t SHT21_ADDRESS = 0x40;
 
-
-ThetaCloudHumidity::ThetaCloudHumidity()
-{
-}
 constexpr uint8_t GET_TEMPERATURE_CMD = 0xF3;
 constexpr uint8_t GET_HUMIDITY_CMD = 0xF5;
 
