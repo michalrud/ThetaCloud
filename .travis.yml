@@ -1,0 +1,24 @@
+language: cpp
+os: linux
+sudo: required
+dist: trusty
+
+addons:
+  apt:
+    update: true
+    packages:
+      - cmake
+      - gcovr
+before_script:
+  - gcov --version
+  - g++ --version
+  - PARENTDIR=$(pwd)
+  - mkdir $PARENTDIR/build && cd $PARENTDIR/build
+script:
+  - cd $PARENTDIR/build
+  - cmake -Dcoverage=ON -DCMAKE_CXX_COMPILER=$COMPILER $PARENTDIR
+  - make
+  - ctest
+after_success:
+  - cd $PARENTDIR
+  - gcovr -r . --exclude 'build/.*' --exclude "test/.*"
