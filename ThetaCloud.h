@@ -2,7 +2,7 @@
 #define THETA_CLOUD_H
 
 #include <map>
-#include <vector>
+#include <list>
 #include <memory>
 #include <functional>
 #include "SensorData.h"
@@ -33,7 +33,7 @@ private:
 
     Emit dataCallback;
     bool initialized;
-    std::vector<DeviceReadHandler> deviceReadHandlers;
+    std::list<DeviceReadHandler> deviceReadHandlers;
     std::map<std::string, DeviceWriteHandler> deviceWriteHandlers;
 };
 
