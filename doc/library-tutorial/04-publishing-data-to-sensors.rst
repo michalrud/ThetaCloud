@@ -19,7 +19,7 @@ Let's write an application, that will toggle the
 
 .. code-block:: cpp
 	:linenos:
-	:emphasize-lines: 8,33-40
+	:emphasize-lines: 15,38-45
 	
 	#include <ThetaCloud.h>
 	#include <ThetaCloudLight.h>
@@ -29,6 +29,11 @@ Let's write an application, that will toggle the
 	#include <ThetaCloudI2CScanner.h>
 
 	ThetaCloud thetaCloud;
+	ThetaCloudLight thetaCloudLight;
+	ThetaCloudRelay thetaCloudRelay;
+	ThetaCloudHumidity thetaCloudHumidity;
+	ThetaCloudEnvironment thetaCloudEnvironment;
+	ThetaCloudI2CScanner thetaCloudI2CScanner;
 
 	bool relayOn = false;
 

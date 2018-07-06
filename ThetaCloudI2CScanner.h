@@ -9,7 +9,7 @@ class ThetaCloud;
 class ThetaCloudI2CScanner
 {
 public:
-    void init(Thetacloud& thetaCloud);
+    void init(ThetaCloud& thetaCloud);
 private:
     std::string scan();
 

@@ -16,6 +16,12 @@ IPAddress server(192, 168, 0, 2);   // IP Address of an MQTT Broker.
 WiFiClient wclient;
 PubSubClient client(wclient);
 ThetaCloud thetaCloud;
+ThetaCloudLight thetaCloudLight;
+ThetaCloudRelay thetaCloudRelay;
+ThetaCloudHumidity thetaCloudHumidity;
+ThetaCloudCO2 thetaCloudCO2;
+ThetaCloudI2CScanner thetaCloudI2CScanner;
+ThetaCloudPIR thetaCloudPIR;
 
 void connectToWifi()
 {
