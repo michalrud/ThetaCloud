@@ -9,7 +9,7 @@
 class ThetaCloudPIR
 {
 public:
-    void init();
+    void init(ThetaCloud& thetaCloud);
     static const std::string MOTION_DETECTED;
     static const std::string MOTION_LOST;
 protected:
@@ -38,7 +38,5 @@ protected:
                                       } };
     void handlePir(PirInfo &pir, const ThetaCloud::Emit &emit);
 };
-
-extern ThetaCloudPIR thetaCloudPIR;
 
 #endif  // THETA_CLOUD_PIR_H

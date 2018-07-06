@@ -38,20 +38,20 @@ struct ThetaCloudPIRTests : public MockedThetaCloudTests
             return DeviceHandlerTokenPtr();
         }));
 
-        tested.init();
+        tested.init(thetaCloud);
     }
 };
 
 TEST_F(ThetaCloudPIRNotConnectedTests, A0_too_low_nothing_happens)
 {
     EXPECT_CALL((*arduinoMock), analogRead(A0)).WillOnce(Return(0));
-    tested.init();
+    tested.init(thetaCloud);
 }
 
 TEST_F(ThetaCloudPIRNotConnectedTests, A0_too_high_nothing_happens)
 {
     EXPECT_CALL((*arduinoMock), analogRead(A0)).WillOnce(Return(200));
-    tested.init();
+    tested.init(thetaCloud);
 }
 
 TEST_F(ThetaCloudPIRTests, ReadingPIRValue_still_low)

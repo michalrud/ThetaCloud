@@ -19,10 +19,12 @@ First - we need to create a class definition in a header file. This should be en
 
 	#include <DeviceHandlerToken.h>
 
+	class ThetaCloud;
+
 	class ThetaCloudExample
 	{
 	public:
-		void init();
+		void init(ThetaCloud& thetaCloud);
 	protected:
 		DeviceHandlerTokenPtr readToken;
 		DeviceHandlerTokenPtr writeToken;
@@ -33,22 +35,24 @@ First - we need to create a class definition in a header file. This should be en
 	#endif  // THETA_CLOUD_EXAMPLE_H
 
 Not much is happening here - ``init()`` will be our initialization function, where
-we will subscribe to :cpp:class:`ThetaCloud`.
+we will subscribe to :cpp:class:`ThetaCloud` passed as an argument. The ``&`` here
+is important to tell the compiler that we don't want to copy the whole
+:cpp:class:`ThetaCloud` - we want to use the existing one.
 
-In lines 11 and 12 we are creating two ``unique_ptr`` objects that will hold tokens
-for read handler and write handler. While the ``unique_ptr`` is a veru useful C++
+In line 6 we tell the compiler that we will use the :cpp:class:`ThetaCloud` class
+in our code. But since the compiler doesn't have to know the details about it at
+this point, we just tell it that the class is existing, so it wouldn't complain
+about it. We will include the header with actual class definition later in the
+``.cpp`` file, where it will be really required.
+
+In lines 13 and 14 we are creating two ``unique_ptr`` objects that will hold tokens
+for read handler and write handler. While the ``unique_ptr`` is a very useful C++
 feature, you don't have to worry about it at all - all you need to know is that this
 is where you need to put the value returned by :cpp:func:`ThetaCloud::addReadHandler()`
 and :cpp:func:`ThetaCloud::addWriteHandler()`. The idea is, that as long as those
 values are not destroyed the handlers will be registered. That way, when your
 class will be destroyed for whatever reason, :cpp:class:`ThetaCloud` will stop
 calling your handlers and avoid crashing.
-
-Line 15 is not really necessary, and to be honest is a bad
-programming practice - but as most Arduino libraries seem to create
-static variables of their own type, it's probably what most beginner
-Arduino users grew used to. If you know that your library will not be used
-by beginner Arduino users feel free to omit this.
 
 CPP file
 --------
@@ -61,7 +65,7 @@ CPP file
 	#include <ThetaCloud.h>
 	#include <SensorData.h>
 
-	void ThetaCloudExample::init()
+	void ThetaCloudExample::init(ThetaCloud& thetaCloud)
 	{
 		readToken = thetaCloud.addReadHandler([](const ThetaCloud::Emit &emit) {
 			emit(SensorData{"Example", "Heartbeat"});

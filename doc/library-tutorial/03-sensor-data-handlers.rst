@@ -8,7 +8,7 @@ to register it:
 
 .. code-block:: cpp
 	:linenos:
-	:emphasize-lines: 8-13,17
+	:emphasize-lines: 10-15,19
 	
 	#include <ThetaCloud.h>
 	#include <ThetaCloudLight.h>
@@ -16,6 +16,8 @@ to register it:
 	#include <ThetaCloudHumidity.h>
 	#include <ThetaCloudEnvironment.h>
 	#include <ThetaCloudI2CScanner.h>
+
+	ThetaCloud thetaCloud;
 
 	void handleNewData(const SensorData& data)
 	{
@@ -27,12 +29,12 @@ to register it:
 	void setup()
 	{
 		thetaCloud.whenDataAvailable(handleNewData);
-		thetaCloud.init();
-		thetaCloudLight.init();
-		thetaCloudRelay.init();
-		thetaCloudHumidity.init();
-		thetaCloudEnvironment.init();
-		thetaCloudI2CScanner.init();
+		thetaCloud.init(thetaCloud);
+		thetaCloudLight.init(thetaCloud);
+		thetaCloudRelay.init(thetaCloud);
+		thetaCloudHumidity.init(thetaCloud);
+		thetaCloudEnvironment.init(thetaCloud);
+		thetaCloudI2CScanner.init(thetaCloud);
 	}
 
 	void loop()

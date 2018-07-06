@@ -141,7 +141,7 @@ ThetaCloud
 						// Will never be called because of the error!
 						emit(SensorData{"Hello", "There"});
 					}
-					void init()
+					void init(ThetaCloud& thetaCloud)
 					{
 						// WRONG! WILL NOT DO ANYTHING as the return value is
 						// is immediately destroyed
@@ -170,7 +170,7 @@ ThetaCloud
 					{
 						emit(SensorData{"Hello", "There"});
 					}
-					void init()
+					void init(ThetaCloud& thetaCloud)
 					{
 						// Token is preserved - the handler will be automatically
 						// unregistered when this instance of MyHandler gets deleted.
@@ -213,7 +213,7 @@ ThetaCloud
 						// Will never be called because of the error!
 						emit(SensorData{"Hello", "There"});
 					}
-					void init()
+					void init(ThetaCloud& thetaCloud)
 					{
 						// WRONG! WILL NOT DO ANYTHING as the return value is
 						// is immediately destroyed
@@ -246,7 +246,7 @@ ThetaCloud
 					{
 						emit(SensorData{"Hello", "There"});
 					}
-					void init()
+					void init(ThetaCloud& thetaCloud)
 					{
 						// Token is preserved - the handler will be automatically
 						// unregistered when this instance of MyHandler gets deleted.

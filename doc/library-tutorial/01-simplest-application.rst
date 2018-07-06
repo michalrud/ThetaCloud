@@ -9,6 +9,8 @@ written like this:
 	
 	#include <ThetaCloud.h>
 
+	ThetaCloud thetaCloud;
+
 	void setup()
 	{
 		thetaCloud.init();

@@ -8,7 +8,7 @@
 constexpr uint8_t MIN_ADDRESS = 0x01;
 constexpr uint8_t MAX_ADDRESS = 0x7F;
 
-void ThetaCloudI2CScanner::init()
+void ThetaCloudI2CScanner::init(Thetacloud& thetaCloud)
 {
     token = thetaCloud.addReadHandler([this](const ThetaCloud::Emit &emit) {
         emit(SensorData{std::string("i2c-devices"), scan()});
@@ -33,5 +33,3 @@ std::string ThetaCloudI2CScanner::scan()
     }
     return result;
 }
-
-ThetaCloudI2CScanner thetaCloudI2CScanner;

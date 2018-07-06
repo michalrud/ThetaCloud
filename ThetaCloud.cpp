@@ -60,5 +60,3 @@ void ThetaCloud::tick()
     for (const auto &handler : deviceReadHandlers)
         handler(this->dataCallback);
 }
-
-ThetaCloud thetaCloud;

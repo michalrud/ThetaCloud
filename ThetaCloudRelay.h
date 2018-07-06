@@ -5,10 +5,12 @@
 #include "DeviceHandlerToken.h"
 #include <map>
 
+class ThetaCloud;
+
 class ThetaCloudRelay
 {
 public:
-    void init();
+    void init(ThetaCloud& thetaCloud);
 
     static const char *RELAY1;
     static const char *RELAY2;
@@ -28,7 +30,5 @@ protected:
     DeviceHandlerTokenPtr switch1Token;
     DeviceHandlerTokenPtr switch2Token;
 };
-
-extern ThetaCloudRelay thetaCloudRelay;
 
 #endif  // THETA_CLOUD_RELAY_H

@@ -32,7 +32,7 @@ struct ThetaCloudHumidityTests : public MockedThetaCloudTests
             handlers.push_back(h);
             return DeviceHandlerTokenPtr();
         }));
-        tested.init();
+        tested.init(thetaCloud);
 
         EXPECT_EQ(handlers.size(), 2u);
     }

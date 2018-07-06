@@ -22,7 +22,7 @@ Implementing the write handler
 	#include <ThetaCloud.h>
 	#include <SensorData.h>
 
-	void ThetaCloudExample::init()
+	void ThetaCloudExample::init(ThetaCloud& thetaCloud)
 	{
 		readToken = thetaCloud.addReadHandler([](const ThetaCloud::Emit &emit) {
 			emit(SensorData{"Example", "Heartbeat"});
@@ -40,7 +40,7 @@ Implementing the write handler
 	ThetaCloudExample thetaCloudExample;
 
 Here, just like in the read handler example, we need to store the token safely, so :cpp:class:`ThetaCloud` will not deregister our handler. As a first parameter to :cpp:func:`ThetaCloud::addWriteHandler()` we provide the expected name of the data - :cpp:class:`ThetaCloud` will call our handler only when the
-data with this name would be published using :cpp:class:`ThetaCloud::write()`.
+data with this name would be published using :cpp:func:`ThetaCloud::write()`.
 
 The second parameter is a :cpp:type:`ThetaCloud::DeviceWriteHandler` lambda
 function. It takes two parameters - one is the :cpp:class:`SensorData` received, and the other one is a :cpp:type:`ThetaCloud::Emit` callback, just

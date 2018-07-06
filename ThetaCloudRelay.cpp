@@ -8,7 +8,7 @@ const char *ThetaCloudRelay::RELAY2 = "Relay2";
 const std::string ThetaCloudRelay::ON = "ON";
 const std::string ThetaCloudRelay::OFF = "OFF";
 
-void ThetaCloudRelay::init()
+void ThetaCloudRelay::init(ThetaCloud& thetaCloud)
 {
     // is this board connected?
     auto adcValue = analogRead(A0);
@@ -41,5 +41,3 @@ void ThetaCloudRelay::setSwitch(Switch whichOne, bool enabled) const
 {
     digitalWrite(SWITCH_GPIO.at(whichOne), enabled ? HIGH : LOW);
 }
-
-ThetaCloudRelay thetaCloudRelay;

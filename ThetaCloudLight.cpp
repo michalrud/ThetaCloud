@@ -33,7 +33,7 @@ constexpr float getLuxMultiplier(const float resolution, const float range)
     return range/resolution;
 }
 
-void ThetaCloudLight::init()
+void ThetaCloudLight::init(ThetaCloud& thetaCloud)
 {
     WriteToI2C(ISL29023_ADDRESS)
     .write(COMMAND1_REGISTER).write(CONTINOUS_AMBIENT_LIGHT_MEAS);
@@ -60,5 +60,3 @@ float ThetaCloudLight::read()
 
     return float(light) * getLuxMultiplier(USED_RESOLUTION, USED_RANGE);
 }
-
-ThetaCloudLight thetaCloudLight;

@@ -5,16 +5,16 @@
 #include "SensorData.h"
 #include "DeviceHandlerToken.h"
 
+class ThetaCloud;
+
 class ThetaCloudLight
 {
 public:
-    void init();
+    void init(ThetaCloud& thetaCloud);
 private:
     float read();
 
     DeviceHandlerTokenPtr lightToken;
 };
-
-extern ThetaCloudLight thetaCloudLight;
 
 #endif  // THETA_CLOUD_LIGHT_H

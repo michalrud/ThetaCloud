@@ -27,10 +27,10 @@ TEST_F(ThetaCloudEnvironmentTests, NotConnectedBoardShouldNotDoAnythingInInit)
     EXPECT_CALL((*mockThetaCloud), addReadHandler(_)).Times(0);
 
     EXPECT_CALL((*arduinoMock), analogRead(A0)).WillOnce(Return(0));
-    tested.init();
+    tested.init(thetaCloud);
 
     EXPECT_CALL((*arduinoMock), analogRead(A0)).WillOnce(Return(300));
-    tested.init();
+    tested.init(thetaCloud);
 }
 
 TEST_F(ThetaCloudEnvironmentTests, ReadingCo2AndVoc)
@@ -45,7 +45,7 @@ TEST_F(ThetaCloudEnvironmentTests, ReadingCo2AndVoc)
         handler = h;
         return DeviceHandlerTokenPtr();
     }));
-    tested.init();
+    tested.init(thetaCloud);
 
     expectWriteTo((*Wire.mock), s, MICS_VZ_89_ADDRESS, {GET_STATUS_COMMAND});
     expectReadFrom((*Wire.mock), s, MICS_VZ_89_ADDRESS, {0xFF, 0x0B, 0xFC, 0xFD, 0x0E, 0x0F});

@@ -35,7 +35,7 @@ struct ThetaCloudLightTests : public MockedThetaCloudTests
             readHandler = h;
             return DeviceHandlerTokenPtr();
         }));
-        tested.init();
+        tested.init(thetaCloud);
     }
 };
 

@@ -47,19 +47,19 @@ struct ThetaCloudRelayTests : public MockedThetaCloudTests
             return DeviceHandlerTokenPtr();
         }));
 
-        tested.init();
+        tested.init(thetaCloud);
     }
 };
 
 TEST_F(ThetaCloudRelayNotInitializedTests, A0_too_low_nothing_happens)
 {
     EXPECT_CALL((*arduinoMock), analogRead(A0)).WillOnce(Return(200));
-    tested.init();
+    tested.init(thetaCloud);
 }
 TEST_F(ThetaCloudRelayNotInitializedTests, A0_too_high_nothing_happens)
 {
     EXPECT_CALL((*arduinoMock), analogRead(A0)).WillOnce(Return(400));
-    tested.init();
+    tested.init(thetaCloud);
 }
 
 TEST_F(ThetaCloudRelayTests, Enable_Relay1)

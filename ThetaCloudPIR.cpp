@@ -4,7 +4,7 @@
 const std::string ThetaCloudPIR::MOTION_DETECTED = "Motion detected!";
 const std::string ThetaCloudPIR::MOTION_LOST = "Motion lost.";
 
-void ThetaCloudPIR::init()
+void ThetaCloudPIR::init(ThetaCloud& thetaCloud)
 {
     // is this board connected?
     auto adcValue = analogRead(A0);
@@ -27,5 +27,3 @@ void ThetaCloudPIR::handlePir(ThetaCloudPIR::PirInfo &pir, const ThetaCloud::Emi
         emit(SensorData{pir.name, currentState ? "Motion detected!" : "Motion lost."});
     }
 }
-
-ThetaCloudPIR thetaCloudPIR;

@@ -15,10 +15,12 @@
 #endif // MPL3115A2_ADDRESS
 #endif // USE_MPL3115A2
 
+class ThetaCloud;
+
 class ThetaCloudEnvironment
 {
 public:
-    void init();
+    void init(ThetaCloud& thetaCloud);
 protected:
     struct AirSensorValue
     {
@@ -43,7 +45,5 @@ protected:
 
     DeviceHandlerTokenPtr co2Token;
 };
-
-extern ThetaCloudEnvironment thetaCloudEnvironment;
 
 #endif  // THETA_CLOUD_ENVIRONMENT_H

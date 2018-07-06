@@ -15,6 +15,7 @@ std::string deviceId = "UNKNOWN";
 IPAddress server(192, 168, 0, 2);   // IP Address of an MQTT Broker.
 WiFiClient wclient;
 PubSubClient client(wclient);
+ThetaCloud thetaCloud;
 
 void connectToWifi()
 {
@@ -65,12 +66,12 @@ void setup()
   
   thetaCloud.whenDataAvailable(handleSensorData);
   thetaCloud.init();
-  thetaCloudLight.init();
-  thetaCloudRelay.init();
-  thetaCloudHumidity.init();
-  thetaCloudCO2.init();
-  thetaCloudI2CScanner.init();
-  thetaCloudPIR.init();
+  thetaCloudLight.init(thetaCloud);
+  thetaCloudRelay.init(thetaCloud);
+  thetaCloudHumidity.init(thetaCloud);
+  thetaCloudCO2.init(thetaCloud);
+  thetaCloudI2CScanner.init(thetaCloud);
+  thetaCloudPIR.init(thetaCloud);
 }
 
 void loop()

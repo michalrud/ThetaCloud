@@ -7,15 +7,17 @@ the base board by default:
 
 .. code-block:: cpp
 	:linenos:
-	:emphasize-lines: 2,7
+	:emphasize-lines: 2,9
 	
 	#include <ThetaCloud.h>
 	#include <ThetaCloudLight.h>
 
+	ThetaCloud thetaCloud;
+
 	void setup()
 	{
 		thetaCloud.init();
-		thetaCloudLight.init();
+		thetaCloudLight.init(thetaCloud);
 	}
 
 	void loop()
@@ -34,7 +36,7 @@ Since it's that easy, let's enable all provided modules:
 
 .. code-block:: cpp
 	:linenos:
-	:emphasize-lines: 3,4,5,6,12,13,14,15
+	:emphasize-lines: 3,4,5,6,14,15,16,17
 	
 	#include <ThetaCloud.h>
 	#include <ThetaCloudLight.h>
@@ -43,14 +45,16 @@ Since it's that easy, let's enable all provided modules:
 	#include <ThetaCloudEnvironment.h>
 	#include <ThetaCloudI2CScanner.h>
 
+	ThetaCloud thetaCloud;
+
 	void setup()
 	{
 		thetaCloud.init();
-		thetaCloudLight.init();
-		thetaCloudRelay.init();
-		thetaCloudHumidity.init();
-		thetaCloudEnvironment.init();
-		thetaCloudI2CScanner.init();
+		thetaCloudLight.init(thetaCloud);
+		thetaCloudRelay.init(thetaCloud);
+		thetaCloudHumidity.init(thetaCloud);
+		thetaCloudEnvironment.init(thetaCloud);
+		thetaCloudI2CScanner.init(thetaCloud);
 	}
 
 	void loop()

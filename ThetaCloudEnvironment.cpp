@@ -7,7 +7,7 @@
 constexpr uint8_t MICS_VZ_89_ADDRESS = 0x70;
 constexpr uint8_t GET_STATUS_COMMAND = 0b00001001;
 
-void ThetaCloudEnvironment::init()
+void ThetaCloudEnvironment::init(ThetaCloud& thetaCloud)
 {
     // is this board connected?
     auto adcValue = analogRead(A0);
@@ -60,5 +60,3 @@ ThetaCloudEnvironment::BaroSensorValue ThetaCloudEnvironment::GetBaroReadings()
 }
 
 #endif
-
-ThetaCloudEnvironment thetaCloudEnvironment;

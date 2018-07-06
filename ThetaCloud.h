@@ -37,6 +37,4 @@ private:
     std::map<std::string, DeviceWriteHandler> deviceWriteHandlers;
 };
 
-extern ThetaCloud thetaCloud;
-
 #endif  // THETA_CLOUD_H

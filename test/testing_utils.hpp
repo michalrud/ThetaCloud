@@ -32,6 +32,8 @@ struct MockedThetaCloudTests : public GenericTest {
     {
         mockThetaCloud.reset();
     }
+
+    ThetaCloud thetaCloud;
 };
 
 bool operator ==(const SensorData &a, const SensorData &b)

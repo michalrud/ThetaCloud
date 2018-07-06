@@ -5,10 +5,12 @@
 #include <memory>
 #include "DeviceHandlerToken.h"
 
+class ThetaCloud;
+
 class ThetaCloudHumidity
 {
 public:
-    void init();
+    void init(ThetaCloud& thetaCloud);
 protected:
     struct SensorGetValue
     {
@@ -25,7 +27,5 @@ protected:
     DeviceHandlerTokenPtr humidityToken;
     DeviceHandlerTokenPtr temperatureToken;
 };
-
-extern ThetaCloudHumidity thetaCloudHumidity;
 
 #endif  // THETA_CLOUD_HUMIDITY_H

@@ -33,5 +33,4 @@ void ThetaCloud::tick()
     mockThetaCloud->tick();
 }
 
-ThetaCloud thetaCloud;
 std::unique_ptr<MockThetaCloud> mockThetaCloud;

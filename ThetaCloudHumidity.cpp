@@ -11,7 +11,7 @@ constexpr uint8_t SHT21_ADDRESS = 0x40;
 constexpr uint8_t GET_TEMPERATURE_CMD = 0xF3;
 constexpr uint8_t GET_HUMIDITY_CMD = 0xF5;
 
-void ThetaCloudHumidity::init()
+void ThetaCloudHumidity::init(ThetaCloud& thetaCloud)
 {
     humidityToken = thetaCloud.addReadHandler([this](const ThetaCloud::Emit &emit) {
         emit(SensorData{std::string("humidity"), to_string(this->GetHumidity())});
@@ -56,5 +56,3 @@ ThetaCloudHumidity::SensorGetValue ThetaCloudHumidity::GetValue(uint8_t command)
                result, false
     };
 }
-
-ThetaCloudHumidity thetaCloudHumidity;
