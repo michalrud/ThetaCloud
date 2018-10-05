@@ -1,0 +1,43 @@
+stages:
+  - test
+  - doc
+
+variables:
+  DEBIAN_FRONTEND: "noninteractive"
+
+before_script:
+  - apt-get update -y
+
+test:
+  image: gcc:latest
+  stage: test
+  script:
+    - apt-get install python3-pip cmake -y
+    - pip3 install gcovr
+    - mkdir build
+    - pushd build
+    - cmake ..
+    - make -j4
+    - ctest --output-on-failure
+    - popd
+    - gcovr -s -r . --exclude "build/.*" --exclude "test/.*"
+
+formatting:
+  image: ubuntu:latest
+  stage: test
+  script:
+    - apt-get install uncrustify -y
+    - find -regex '.*\.\(cpp\|h\|hpp\)' | uncrustify -F - -c formatting.cfg --check
+
+doc:
+  image: ubuntu:latest
+  stage: doc
+  script:
+    - apt-get install python3-sphinx make -y
+    - sphinx-build -b html . ./_build
+    - mv _build/ public/
+  artifacts:
+    paths:
+      - public
+  only:
+    - master

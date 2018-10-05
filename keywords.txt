@@ -1,0 +1,33 @@
+#######################################
+# Syntax Coloring Map
+#######################################
+
+#######################################
+# Datatypes (KEYWORD1)
+#######################################
+
+SensorData	KEYWORD1
+
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################
+
+init	KEYWORD2
+tick	KEYWORD2
+whenDataAvailable KEYWORD2
+getName	KEYWORD2
+getValue	KEYWORD2
+addReadHandler	KEYWORD2
+
+######################################
+# Constants (LITERAL1)
+#######################################
+
+thetaCloud	LITERAL1
+thetaCloudLight	LITERAL1
+thetaCloudRelay	LITERAL1
+thetaCloudHumidity	LITERAL1
+thetaCloudEnvironment	LITERAL1
+thetaCloudI2CScanner	LITERAL1
+thetaCloudPIR	LITERAL1
+sensorData	LITERAL1
